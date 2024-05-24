@@ -1,3 +1,8 @@
-System.out.println("hello");
-System.out.println("hiiii");
-System.out.println("bye");
+
+void setup(){
+  size(500,500);
+  
+  
+  
+  
+}
