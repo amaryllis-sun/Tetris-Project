@@ -1,45 +1,251 @@
+int startX = 400;
+int startY = 50;
+int score;
+int level;
+int lines;
+boolean newTetronimo = true;
+ArrayList<TetrisBlock> currentTetronimo;
+color blue = color(6, 225, 255);
+color pink = color(255, 79, 185);
+color orange = color(253, 140, 0);
+color yellow = color(250, 254, 2);
+color red = color(246, 0, 1);
+color purple = color(159, 1, 149);
+color green = color(103, 181, 35);
 
 void setup(){
   size(800,800);
-  Block[][] grid = new Block[width][height];
+  TetrisBlock[][] grid = new TetrisBlock[width][height];
   color c = color(0,0,0);
   for(int x = 0; x < grid.length; x +=25){
     for(int y = 0; y < grid[0].length; y+=25){
-      grid[x][y] = new Block(x,y,c,25);
+      grid[x][y] = new TetrisBlock(x,y,c,25);
       grid[x][y].draw();
     }
   }
 }
+
+void draw(){
+  if (newTetronimo==true){
+    currentTetronimo = new ArrayList<TetrisBlock>();
+    // randomly choose a tetromino function to call with random array of integers, 
+    // for now keep it as tetronimoI for testing
+    int randomNum = (int)(Math.random()*7)+1;
+    if (randomNum==1) tetronimoI();
+    if (randomNum==2) tetronimoJ();
+    if (randomNum==3) tetronimoL();
+    if (randomNum==4) tetronimoO();
+    if (randomNum==5) tetronimoS();
+    if (randomNum==6) tetronimoT();
+    if (randomNum==7) tetronimoZ();
+    newTetronimo=false;
+  }
+}
   
-void tetronimoOI(){
-  print("");
+void tetronimoI(){
+  TetrisBlock one = new TetrisBlock(startX, startY, blue, 25);
+  TetrisBlock two = new TetrisBlock(startX, startY+25, blue,25);
+  TetrisBlock three = new TetrisBlock(startX, startY+50,blue,25);
+  TetrisBlock four = new TetrisBlock(startX, startY+75, blue,25);
+  one.draw();
+  two.draw();
+  three.draw();
+  four.draw();
+  if (get(four.getX(),four.getY()+1) == color(225) ||
+      get(four.getX(),four.getY()+1) == blue ||
+      get(four.getX(),four.getY()+1) == pink ||
+      get(four.getX(),four.getY()+1) == orange ||
+      get(four.getX(),four.getY()+1) == yellow ||
+      get(four.getX(),four.getY()+1) == red ||
+      get(four.getX(),four.getY()+1) == purple ||
+      get(four.getX(),four.getY()+1) == green
+  ){
+     newTetronimo = true;
+   }
 }
 
+// how to loop?
+
 void tetronimoJ(){
-  print("");
+  startY += 25;
+  TetrisBlock one = new TetrisBlock(startX, startY, pink,25);
+  TetrisBlock two = new TetrisBlock(startX, startY+25, pink,25);
+  TetrisBlock three = new TetrisBlock(startX, startY+50, pink, 25);
+  TetrisBlock four = new TetrisBlock(startX-25, startY+50, pink,25);
+  one.draw();
+  two.draw();
+  three.draw();
+  four.draw();
+    if (get(four.getX(),four.getY()+1) == color(225) ||
+      get(four.getX(),four.getY()+1) == blue ||
+      get(four.getX(),four.getY()+1) == pink ||
+      get(four.getX(),four.getY()+1) == orange ||
+      get(four.getX(),four.getY()+1) == yellow ||
+      get(four.getX(),four.getY()+1) == red ||
+      get(four.getX(),four.getY()+1) == purple ||
+      get(four.getX(),four.getY()+1) == green || 
+      get(three.getX(),three.getY()+1) == color(225) ||
+      get(three.getX(),three.getY()+1) == blue ||
+      get(three.getX(),three.getY()+1) == pink ||
+      get(three.getX(),three.getY()+1) == orange ||
+      get(three.getX(),three.getY()+1) == yellow ||
+      get(three.getX(),three.getY()+1) == red ||
+      get(three.getX(),three.getY()+1) == purple ||
+      get(three.getX(),three.getY()+1) == green 
+  ){
+     newTetronimo = true;
+   }
+   else{startY+=25;} // tetronimoI is called again (somehow? how?), blocks move down by 25
 }
 
 void tetronimoL(){
-  print("");
+  startY += 25;
+  TetrisBlock one = new TetrisBlock(startX, startY, orange,25);
+  TetrisBlock two = new TetrisBlock(startX, startY+25, orange,25);
+  TetrisBlock three = new TetrisBlock(startX, startY+50, orange,25);
+  TetrisBlock four = new TetrisBlock(startX+25, startY+50, orange,25);
+  one.draw();
+  two.draw();
+  three.draw();
+  four.draw();
+      if (get(four.getX(),four.getY()+1) == color(225) ||
+      get(four.getX(),four.getY()+1) == blue ||
+      get(four.getX(),four.getY()+1) == pink ||
+      get(four.getX(),four.getY()+1) == orange ||
+      get(four.getX(),four.getY()+1) == yellow ||
+      get(four.getX(),four.getY()+1) == red ||
+      get(four.getX(),four.getY()+1) == purple ||
+      get(four.getX(),four.getY()+1) == green || 
+      get(three.getX(),three.getY()+1) == color(225) ||
+      get(three.getX(),three.getY()+1) == blue ||
+      get(three.getX(),three.getY()+1) == pink ||
+      get(three.getX(),three.getY()+1) == orange ||
+      get(three.getX(),three.getY()+1) == yellow ||
+      get(three.getX(),three.getY()+1) == red ||
+      get(three.getX(),three.getY()+1) == purple ||
+      get(three.getX(),three.getY()+1) == green 
+  ){
+     newTetronimo = true;
+   }
+   else{startY+=25;} // tetronimoI is called again, blocks move down by 25
 }
 
 void tetronimoO(){
-  print("");
+  startY += 25;
+  TetrisBlock one = new TetrisBlock(startX, startY, yellow,25);
+  TetrisBlock two = new TetrisBlock(startX+25, startY, yellow,25);
+  TetrisBlock three = new TetrisBlock(startX, startY+25, yellow,25);
+  TetrisBlock four = new TetrisBlock(startX+25, startY+25, yellow,25);
+  one.draw();
+  two.draw();
+  three.draw();
+  four.draw();
+      if (get(four.getX(),four.getY()+1) == color(225) ||
+      get(four.getX(),four.getY()+1) == blue ||
+      get(four.getX(),four.getY()+1) == pink ||
+      get(four.getX(),four.getY()+1) == orange ||
+      get(four.getX(),four.getY()+1) == yellow ||
+      get(four.getX(),four.getY()+1) == red ||
+      get(four.getX(),four.getY()+1) == purple ||
+      get(four.getX(),four.getY()+1) == green || 
+      get(three.getX(),three.getY()+1) == color(225) ||
+      get(three.getX(),three.getY()+1) == blue ||
+      get(three.getX(),three.getY()+1) == pink ||
+      get(three.getX(),three.getY()+1) == orange ||
+      get(three.getX(),three.getY()+1) == yellow ||
+      get(three.getX(),three.getY()+1) == red ||
+      get(three.getX(),three.getY()+1) == purple ||
+      get(three.getX(),three.getY()+1) == green 
+  ){
+     newTetronimo = true;
+   }
+   else{startY+=25;} // tetronimoI is called again, blocks move down by 25
 }
 
 void tetronimoS(){
-  print("");
+  startY += 25;
+  TetrisBlock one = new TetrisBlock(startX, startY, red,25);
+  TetrisBlock two = new TetrisBlock(startX+25, startY, red,25);
+  TetrisBlock three = new TetrisBlock(startX, startY+25, red,25);
+  TetrisBlock four = new TetrisBlock(startX-25, startY+25, red,25);
+  one.draw();
+  two.draw();
+  three.draw();
+  four.draw();
+      if (get(four.getX(),four.getY()+1) == color(225) ||
+      get(four.getX(),four.getY()+1) == blue ||
+      get(four.getX(),four.getY()+1) == pink ||
+      get(four.getX(),four.getY()+1) == orange ||
+      get(four.getX(),four.getY()+1) == yellow ||
+      get(four.getX(),four.getY()+1) == red ||
+      get(four.getX(),four.getY()+1) == purple ||
+      get(four.getX(),four.getY()+1) == green || 
+      get(three.getX(),three.getY()+1) == color(225) ||
+      get(three.getX(),three.getY()+1) == blue ||
+      get(three.getX(),three.getY()+1) == pink ||
+      get(three.getX(),three.getY()+1) == orange ||
+      get(three.getX(),three.getY()+1) == yellow ||
+      get(three.getX(),three.getY()+1) == red ||
+      get(three.getX(),three.getY()+1) == purple ||
+      get(three.getX(),three.getY()+1) == green 
+  ){
+     newTetronimo = true;
+   }
+   else{startY+=25;} // tetronimoI is called again, blocks move down by 25
 }
 
 void tetronimoT(){
-  print("");
+  startY += 25;
+  TetrisBlock one = new TetrisBlock(startX, startY, purple,25);
+  TetrisBlock two = new TetrisBlock(startX+25, startY, purple,25);
+  TetrisBlock three = new TetrisBlock(startX+25, startY, purple,25);
+  TetrisBlock four = new TetrisBlock(startX, startY+25, purple,25);
+  one.draw();
+  two.draw();
+  three.draw();
+  four.draw();
+      if (get(four.getX(),four.getY()+1) == color(225) ||
+      get(four.getX(),four.getY()+1) == blue ||
+      get(four.getX(),four.getY()+1) == pink ||
+      get(four.getX(),four.getY()+1) == orange ||
+      get(four.getX(),four.getY()+1) == yellow ||
+      get(four.getX(),four.getY()+1) == red ||
+      get(four.getX(),four.getY()+1) == purple ||
+      get(four.getX(),four.getY()+1) == green
+  ){
+     newTetronimo = true;
+   }
+   else{startY+=25;} // tetronimoI is called again, blocks move down by 25
 }
 
 void tetronimoZ(){
-  print("");
-}
-  
-  
-  
-  
+  startY += 25;
+  TetrisBlock one = new TetrisBlock(startX, startY, green,25);
+  TetrisBlock two = new TetrisBlock(startX-25, startY, green,25);
+  TetrisBlock three = new TetrisBlock(startX, startY+25, green,25);
+  TetrisBlock four = new TetrisBlock(startX+25, startY+25, green,25);
+  one.draw();
+  two.draw();
+  three.draw();
+  four.draw();
+      if (get(four.getX(),four.getY()+1) == color(225) ||
+      get(four.getX(),four.getY()+1) == blue ||
+      get(four.getX(),four.getY()+1) == pink ||
+      get(four.getX(),four.getY()+1) == orange ||
+      get(four.getX(),four.getY()+1) == yellow ||
+      get(four.getX(),four.getY()+1) == red ||
+      get(four.getX(),four.getY()+1) == purple ||
+      get(four.getX(),four.getY()+1) == green || 
+      get(three.getX(),three.getY()+1) == color(225) ||
+      get(three.getX(),three.getY()+1) == blue ||
+      get(three.getX(),three.getY()+1) == pink ||
+      get(three.getX(),three.getY()+1) == orange ||
+      get(three.getX(),three.getY()+1) == yellow ||
+      get(three.getX(),three.getY()+1) == red ||
+      get(three.getX(),three.getY()+1) == purple ||
+      get(three.getX(),three.getY()+1) == green 
+  ){
+     newTetronimo = true;
+   }
+   else{startY+=25;} // tetronimoI is called again, blocks move down by 25
 }
