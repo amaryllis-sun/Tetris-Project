@@ -20,11 +20,7 @@ int h;
    int getX(){
      return y;
    }
-   
-   int getColor(){
-     return y;
-   }
-   
+      
    int getY(){
      return y;
    }
