@@ -24,4 +24,13 @@ int h;
    int getY(){
      return y;
    }
+   void setX(int x){
+     this.x = x;
+   }
+   void setY(int y){
+     this.y = y;
+   }
+   color getColor(){
+     return c; 
+   }
 }

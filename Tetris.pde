@@ -1,5 +1,6 @@
 int startX = 400;
 int startY = 50;
+ TetrisBlock[][] grid;
 int score;
 int level;
 int lines;
@@ -31,7 +32,10 @@ void draw(){
     // randomly choose a tetromino function to call with random array of integers, 
     // for now keep it as tetronimoI for testing
     int randomNum = (int)(Math.random()*7)+1;
-    if (randomNum==1) tetronimoI();
+    if (randomNum==1) {
+      tetronimoI();
+    
+    }
     if (randomNum==2) tetronimoJ();
     if (randomNum==3) tetronimoL();
     if (randomNum==4) tetronimoO();
@@ -39,6 +43,9 @@ void draw(){
     if (randomNum==6) tetronimoT();
     if (randomNum==7) tetronimoZ();
     newTetronimo=false;
+  }
+  for(int i = 0; i <  currentTetronimo.size(); i++){
+    fall(currentTetronimo.get(i));
   }
 }
   
@@ -289,3 +296,15 @@ void tetronimoZ(){
      gameLost();
    } else{startY+=25;} // tetronimoI is called again, blocks move down by 25
 }
+
+  void fall(TetrisBlock block){
+    int x = block.getX();
+    int y = block.getY(); 
+    int c = block.getColor(); 
+    color black = color(0,0,0);
+    while(x -25< height && grid[x+25][y].getColor() == black){
+      x +=25; 
+      grid[x][y] = new TetrisBlock(x,y,c,25);
+     grid[x][y].draw();
+    }
+  }
