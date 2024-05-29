@@ -42,6 +42,13 @@ void draw(){
   }
 }
   
+//Is called if a tetronimo has exceeded the height of the screen/grid
+void gameLost() {
+  print("There is no more room to place the tetronimos, you have lost the game!");
+  //Will display the final score and level once those methods are added
+}
+  
+  
 void tetronimoI(){
   TetrisBlock one = new TetrisBlock(startX, startY, blue, 25);
   TetrisBlock two = new TetrisBlock(startX, startY+25, blue,25);
@@ -51,7 +58,9 @@ void tetronimoI(){
   two.draw();
   three.draw();
   four.draw();
-  if (get(four.getX(),four.getY()+1) == color(225) ||
+  //Checks blocks below to see if it can finalize placement
+  //get(four.getX(),four.getY()+1) == color(225) ||
+  if (
       get(four.getX(),four.getY()+1) == blue ||
       get(four.getX(),four.getY()+1) == pink ||
       get(four.getX(),four.getY()+1) == orange ||
@@ -60,9 +69,34 @@ void tetronimoI(){
       get(four.getX(),four.getY()+1) == purple ||
       get(four.getX(),four.getY()+1) == green
   ){
-     newTetronimo = true;
-   }
-}
+    newTetronimo = true;
+   } else if (one.getY() < 0) { //Tallest block 
+     gameLost();
+   } else {  
+     //Add all the blocks to the currentTetronimo ArrayList, and then 
+     //loop through all the blocks to increment their y-value using the incY method in 
+     //the Block class??
+     currentTetronimo.add(one);
+     currentTetronimo.add(two);
+     currentTetronimo.add(three);
+     currentTetronimo.add(four);
+     //Below doesn't work but I feel like the logic is there...
+     
+     //for (int i = 0; i < currentTetronimo.size(); i++) { //Looping through the ArrayList
+     //Making sure that there aren't blocks below the tetronimo so that it can continue 
+     //progressing downwards
+     //  while ( get(four.getX(),four.getY()+1) != blue || 
+     // get(four.getX(),four.getY()+1) != pink ||
+     // get(four.getX(),four.getY()+1) != orange ||
+     // get(four.getX(),four.getY()+1) != yellow ||
+     // get(four.getX(),four.getY()+1) != red ||
+     // get(four.getX(),four.getY()+1) != purple ||
+     // get(four.getX(),four.getY()+1) != green) {
+        startY += 25; // tetronimoI is called again, block moves down by 25 units
+       }
+     }
+   //}
+//}
 
 // how to loop?
 
@@ -94,8 +128,9 @@ void tetronimoJ(){
       get(three.getX(),three.getY()+1) == green 
   ){
      newTetronimo = true;
-   }
-   else{startY+=25;} // tetronimoI is called again (somehow? how?), blocks move down by 25
+   } else if (one.getY() < 0) { //Tallest block
+     gameLost();
+   } else{startY+=25;} // tetronimoJ is called again (somehow? how?), blocks move down by 25
 }
 
 void tetronimoL(){
@@ -126,8 +161,9 @@ void tetronimoL(){
       get(three.getX(),three.getY()+1) == green 
   ){
      newTetronimo = true;
-   }
-   else{startY+=25;} // tetronimoI is called again, blocks move down by 25
+   } else if (one.getY() < 0) { //Tallest block
+     gameLost();
+   } else{startY+=25;} // tetronimoI is called again, blocks move down by 25
 }
 
 void tetronimoO(){
@@ -158,8 +194,9 @@ void tetronimoO(){
       get(three.getX(),three.getY()+1) == green 
   ){
      newTetronimo = true;
-   }
-   else{startY+=25;} // tetronimoI is called again, blocks move down by 25
+   } else if (one.getY() < 0) { //Tallest block
+     gameLost();
+   } else{startY+=25;} // tetronimoI is called again, blocks move down by 25
 }
 
 void tetronimoS(){
@@ -190,15 +227,16 @@ void tetronimoS(){
       get(three.getX(),three.getY()+1) == green 
   ){
      newTetronimo = true;
-   }
-   else{startY+=25;} // tetronimoI is called again, blocks move down by 25
+   } else if (one.getY() < 0) {
+     gameLost();
+   } else{startY+=25;} // tetronimoI is called again, blocks move down by 25
 }
 
 void tetronimoT(){
   startY += 25;
   TetrisBlock one = new TetrisBlock(startX, startY, purple,25);
   TetrisBlock two = new TetrisBlock(startX+25, startY, purple,25);
-  TetrisBlock three = new TetrisBlock(startX+25, startY, purple,25);
+  TetrisBlock three = new TetrisBlock(startX-25, startY, purple,25);
   TetrisBlock four = new TetrisBlock(startX, startY+25, purple,25);
   one.draw();
   two.draw();
@@ -214,8 +252,9 @@ void tetronimoT(){
       get(four.getX(),four.getY()+1) == green
   ){
      newTetronimo = true;
-   }
-   else{startY+=25;} // tetronimoI is called again, blocks move down by 25
+   } else if (one.getY() < 0) {
+     gameLost();
+   } else{startY+=25;} // tetronimoI is called again, blocks move down by 25
 }
 
 void tetronimoZ(){
@@ -246,6 +285,7 @@ void tetronimoZ(){
       get(three.getX(),three.getY()+1) == green 
   ){
      newTetronimo = true;
-   }
-   else{startY+=25;} // tetronimoI is called again, blocks move down by 25
+   } else if (one.getY() < 0) {
+     gameLost();
+   } else{startY+=25;} // tetronimoI is called again, blocks move down by 25
 }
