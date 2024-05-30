@@ -18,6 +18,7 @@ color green = color(103, 181, 35);
 
 // draw grid
 void setup(){
+  frameRate(5);
   size(800,800);
   background(0);
   TetrisBlock[][] grid = new TetrisBlock[width][height];
@@ -63,30 +64,29 @@ void tetrominoI(){
   two.draw();
   three.draw();
   four.draw();
-  //Checks blocks below to see if it can finalize placement
+  // Adds to currentTetromino list
   currentTetromino.add(one);
   currentTetromino.add(two);
   currentTetromino.add(three);
   currentTetromino.add(four);
-  //Checks blocks below to see if it can finalize placement
   
+  int x = startX;
   // PROBLEM HERE
+  // while the bottom blocks are not on top of another block, it falls
   while (get(four.getX(),four.getY()+3) == color(225) || get(four.getX(),four.getY()+3) == color(0)){
-   // falls
+   // loops through currentTetromino
    for(int i = 0; i <  currentTetromino.size(); i++){
-     // for each i, moves it down, how? idk
-      currentTetromino.get(i).setY(currentTetromino.get(i).getY()+25); 
-      TetrisBlock moved = new TetrisBlock(currentTetromino.get(i).getX(),currentTetromino.get(i).getY()+25,blue,25);
-      moved.draw();
+     TetrisBlock currBlock = currentTetromino.get(i);
+     System.out.print(i+": ");
+     currBlock.printXY(); // testing purposes
+      currBlock.removeBlock(); // sets block to black
+      currBlock.setY(currBlock.getY()+25); // moves block down
+      currBlock.setColor(blue); // sets back to blue
+      currBlock.draw();
    }
   }
   newTetromino = true;
 }
-
-
-
-// how to loop?
-
 void tetrominoJ(){
   startY += 25;
   TetrisBlock one = new TetrisBlock(startX, startY, pink,25);

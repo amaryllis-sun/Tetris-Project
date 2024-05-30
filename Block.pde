@@ -33,4 +33,14 @@ int h;
    color getColor(){
      return c; 
    }
+   // for checking work
+   void printXY(){
+     System.out.println(x+","+y);
+   }
+   void setColor(color c){
+     this.c=c;
+   }
+   void removeBlock(){
+     this.c=color(0);
+   }
 }
