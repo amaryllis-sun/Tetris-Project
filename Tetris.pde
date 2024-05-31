@@ -4,6 +4,7 @@ int startY = 50;
 int score;
 int level;
 int lines;
+boolean fall;
 boolean newTetromino = true;
 ArrayList<TetrisBlock> currentTetromino;
 
@@ -37,7 +38,12 @@ void draw(){
     // randomly choose a tetromino function to call with random array of integers, 
     //int randomNum = (int)(Math.random()*7)+1;
     int randomNum = 1;
-    if (randomNum==1) tetrominoI();
+    if (randomNum==1){
+      // while fall = true;
+      tetrominoI();
+      black("tetrominoI");
+      startY+=25;
+    }
     if (randomNum==2) tetrominoJ();
     if (randomNum==3) tetrominoL();
     if (randomNum==4) tetrominoO();
@@ -52,6 +58,19 @@ void draw(){
 void gameLost() {
   print("There is no more room to place the tetrominos, you have lost the game!");
   //Will display the final score and level once those methods are added
+}
+
+void black(String tet){
+    if (tet.equals("tetrominoI")){
+      TetrisBlock one = new TetrisBlock(startX, startY-100, color(0), 25);
+      TetrisBlock two = new TetrisBlock(startX, startY-75, color(0),25);
+      TetrisBlock three = new TetrisBlock(startX, startY-50,color(0),25);
+      TetrisBlock four = new TetrisBlock(startX, startY-25, color(0),25);
+      one.draw();
+      two.draw();
+      three.draw();
+      four.draw();
+    }
 }
   
   
@@ -69,23 +88,24 @@ void tetrominoI(){
   currentTetromino.add(two);
   currentTetromino.add(three);
   currentTetromino.add(four);
-  
-  int x = startX;
-  // PROBLEM HERE
-  // while the bottom blocks are not on top of another block, it falls
-  while (get(four.getX(),four.getY()+3) == color(225) || get(four.getX(),four.getY()+3) == color(0)){
+
+  if (get(four.getX(),four.getY()+3) != color(225) || get(four.getX(),four.getY()+3) != color(0)){
+    fall = false;
+  }
+  /*
    // loops through currentTetromino
    for(int i = 0; i <  currentTetromino.size(); i++){
      TetrisBlock currBlock = currentTetromino.get(i);
      System.out.print(i+": ");
      currBlock.printXY(); // testing purposes
-      currBlock.removeBlock(); // sets block to black
-      currBlock.setY(currBlock.getY()+25); // moves block down
-      currBlock.setColor(blue); // sets back to blue
-      currBlock.draw();
+     currBlock.removeBlock(); // sets block to black
+     currBlock.setY(currBlock.getY()+25); // moves block down
+     currBlock.setColor(blue); // sets back to blue
+     currBlock.draw();
    }
   }
-  newTetromino = true;
+  */
+  // newTetromino = true;
 }
 void tetrominoJ(){
   startY += 25;
