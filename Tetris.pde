@@ -4,7 +4,7 @@ int startY = 50;
 int score;
 int level;
 int lines;
-boolean fall;
+boolean fall = true;
 boolean newTetromino = true;
 ArrayList<TetrisBlock> currentTetromino;
 
@@ -16,6 +16,7 @@ color yellow = color(250, 254, 2);
 color red = color(246, 0, 1);
 color purple = color(159, 1, 149);
 color green = color(103, 181, 35);
+color black = color(0);
 
 // draw grid
 void setup(){
@@ -23,11 +24,12 @@ void setup(){
   size(800,800);
   background(0);
   TetrisBlock[][] grid = new TetrisBlock[width][height];
-  color c = color(0,0,0);
   for(int x = 0; x < grid.length; x +=25){
     for(int y = 0; y < grid[0].length; y+=25){
-      grid[x][y] = new TetrisBlock(x,y,c,25);
+      grid[x][y] = new TetrisBlock(x,y,black,25);
       grid[x][y].draw();
+      TetrisBlock test = new TetrisBlock(startX,500,green,25);
+      test.draw();
     }
   }
 }
@@ -35,22 +37,58 @@ void setup(){
 void draw(){
   if (newTetromino==true){
     currentTetromino = new ArrayList<TetrisBlock>();
-    // randomly choose a tetromino function to call with random array of integers, 
     //int randomNum = (int)(Math.random()*7)+1;
-    int randomNum = 1;
+    int randomNum =5;
     if (randomNum==1){
-      // while fall = true;
-      tetrominoI();
-      black("tetrominoI");
-      startY+=25;
+      if (fall == true){
+        tetrominoI();
+        black("tetrominoI");
+        startY+=25;
+      }
     }
-    if (randomNum==2) tetrominoJ();
-    if (randomNum==3) tetrominoL();
-    if (randomNum==4) tetrominoO();
-    if (randomNum==5) tetrominoS();
-    if (randomNum==6) tetrominoT();
-    if (randomNum==7) tetrominoZ();
-    newTetromino=false;
+    if (randomNum==2){
+      if (fall == true){
+        tetrominoJ();
+        black("tetrominoJ");
+        startY+=25;
+      }
+    }
+    if (randomNum==3){
+      if (fall == true){
+        tetrominoL();
+        black("tetrominoL");
+        startY+=25;
+      }
+    }
+    if (randomNum==4){
+      if (fall == true){
+        tetrominoO();
+        black("tetrominoO");
+        startY+=25;
+      }
+    }
+    if (randomNum==5){
+      if (fall == true){
+        tetrominoS();
+        black("tetrominoS");
+        startY+=25;
+      }
+    }
+    if (randomNum==6){
+      if (fall == true){
+        tetrominoT();
+        black("tetrominoT");
+        startY+=25;
+      }
+    }
+    if (randomNum==7){
+      if (fall == true){
+        tetrominoZ();
+        black("tetrominoZ");
+        startY+=25;
+      }
+    }
+    // newTetromino=false;
   }
 }
   
@@ -62,10 +100,70 @@ void gameLost() {
 
 void black(String tet){
     if (tet.equals("tetrominoI")){
-      TetrisBlock one = new TetrisBlock(startX, startY-100, color(0), 25);
-      TetrisBlock two = new TetrisBlock(startX, startY-75, color(0),25);
-      TetrisBlock three = new TetrisBlock(startX, startY-50,color(0),25);
-      TetrisBlock four = new TetrisBlock(startX, startY-25, color(0),25);
+      TetrisBlock one = new TetrisBlock(startX, startY-100, black, 25);
+      TetrisBlock two = new TetrisBlock(startX, startY-75, black,25);
+      TetrisBlock three = new TetrisBlock(startX, startY-50,black,25);
+      TetrisBlock four = new TetrisBlock(startX, startY-25, black,25);
+      one.draw();
+      two.draw();
+      three.draw();
+      four.draw();
+    }
+    if (tet.equals("tetrominoJ")){
+      TetrisBlock one = new TetrisBlock(startX, startY-75, black, 25);
+      TetrisBlock two = new TetrisBlock(startX, startY-50, black,25);
+      TetrisBlock three = new TetrisBlock(startX, startY-25,black,25);
+      TetrisBlock four = new TetrisBlock(startX-25, startY+25, black,25);
+      one.draw();
+      two.draw();
+      three.draw();
+      four.draw();
+    }
+    if (tet.equals("tetrominoL")){
+      TetrisBlock one = new TetrisBlock(startX, startY-75, black,25);
+      TetrisBlock two = new TetrisBlock(startX, startY-50, black,25);
+      TetrisBlock three = new TetrisBlock(startX, startY-25, black,25);
+      TetrisBlock four = new TetrisBlock(startX+25, startY+25, black,25);
+      one.draw();
+      two.draw();
+      three.draw();
+      four.draw();
+    }
+    if (tet.equals("tetrominoO")){ // fix
+      TetrisBlock one = new TetrisBlock(startX, startY-75, black,25);
+      TetrisBlock two = new TetrisBlock(startX+25, startY-75, black,25);
+      TetrisBlock three = new TetrisBlock(startX, startY-50, black,25);
+      TetrisBlock four = new TetrisBlock(startX+25, startY-50, black,25);
+      one.draw();
+      two.draw();
+      three.draw();
+      four.draw();
+    }
+    if (tet.equals("tetrominoS")){ // fix
+      TetrisBlock one = new TetrisBlock(startX, startY-75, black,25);
+      TetrisBlock two = new TetrisBlock(startX+25, startY-75, black,25);
+      TetrisBlock three = new TetrisBlock(startX, startY-50, black,25);
+      TetrisBlock four = new TetrisBlock(startX-25, startY-50, black,25);
+      one.draw();
+      two.draw();
+      three.draw();
+      four.draw();
+    }
+    if (tet.equals("tetrominoT")){ // fix
+      TetrisBlock one = new TetrisBlock(startX, startY-75, purple,25);
+      TetrisBlock two = new TetrisBlock(startX+25, startY-75, purple,25);
+      TetrisBlock three = new TetrisBlock(startX-25, startY-75, purple,25);
+      TetrisBlock four = new TetrisBlock(startX, startY-50, purple,25);
+      one.draw();
+      two.draw();
+      three.draw();
+      four.draw();
+    }
+    if (tet.equals("tetrominoZ")){ // fix
+      TetrisBlock one = new TetrisBlock(startX, startY-75, black,25);
+      TetrisBlock two = new TetrisBlock(startX-25, startY-75, black,25);
+      TetrisBlock three = new TetrisBlock(startX, startY-50, black,25);
+      TetrisBlock four = new TetrisBlock(startX+25, startY-50, black,25);
       one.draw();
       two.draw();
       three.draw();
@@ -83,32 +181,17 @@ void tetrominoI(){
   two.draw();
   three.draw();
   four.draw();
-  // Adds to currentTetromino list
-  currentTetromino.add(one);
-  currentTetromino.add(two);
-  currentTetromino.add(three);
-  currentTetromino.add(four);
-
-  if (get(four.getX(),four.getY()+3) != color(225) || get(four.getX(),four.getY()+3) != color(0)){
+  if (get(four.getX(),four.getY()+30) == color(225) || get(four.getX(),four.getY()+30) == black){
+    System.out.println(four.getY()+30); // should stop at ~500 Helpppp
+    System.out.println(get(four.getX(),four.getY()+5) + "=?" + color(225) + "=?" + black);
+    fall = true;
+  }
+  else{
     fall = false;
   }
-  /*
-   // loops through currentTetromino
-   for(int i = 0; i <  currentTetromino.size(); i++){
-     TetrisBlock currBlock = currentTetromino.get(i);
-     System.out.print(i+": ");
-     currBlock.printXY(); // testing purposes
-     currBlock.removeBlock(); // sets block to black
-     currBlock.setY(currBlock.getY()+25); // moves block down
-     currBlock.setColor(blue); // sets back to blue
-     currBlock.draw();
-   }
-  }
-  */
-  // newTetromino = true;
 }
+
 void tetrominoJ(){
-  startY += 25;
   TetrisBlock one = new TetrisBlock(startX, startY, pink,25);
   TetrisBlock two = new TetrisBlock(startX, startY+25, pink,25);
   TetrisBlock three = new TetrisBlock(startX, startY+50, pink, 25);
@@ -117,17 +200,19 @@ void tetrominoJ(){
   two.draw();
   three.draw();
   four.draw();
-    if (get(four.getX(),four.getY()+3) != color(225) || get(four.getX(),four.getY()+3) != color(0) ||
-      get(three.getX(),three.getY()+3) != color(225) || get(three.getX(),three.getY()+3) != color(0)
+  if (get(four.getX(),four.getY()+30) == color(225) || get(four.getX(),four.getY()+30) == black ||
+      get(three.getX(),three.getY()+30) == color(225) || get(three.getX(),three.getY()+30) == black
   ){
-     newTetromino = true;
-   } else if (one.getY() < 0) { //Tallest block
-     gameLost();
-   } else{startY+=25;} // tetrominoJ is called again (somehow? how?), blocks move down by 25
+    System.out.println(four.getY()+30); // should stop at ~500 Helpppp
+    System.out.println(get(four.getX(),four.getY()+5) + "=?" + color(225) + "=?" + black);
+    fall = true;
+  }
+  else{
+    fall = false;
+  }
 }
 
 void tetrominoL(){
-  startY += 25;
   TetrisBlock one = new TetrisBlock(startX, startY, orange,25);
   TetrisBlock two = new TetrisBlock(startX, startY+25, orange,25);
   TetrisBlock three = new TetrisBlock(startX, startY+50, orange,25);
@@ -136,17 +221,19 @@ void tetrominoL(){
   two.draw();
   three.draw();
   four.draw();
-      if (get(four.getX(),four.getY()+3) != color(225) || get(four.getX(),four.getY()+3) != color(0) ||
-      get(three.getX(),three.getY()+3) != color(225) || get(three.getX(),three.getY()+3) != color(0)
+  if (get(four.getX(),four.getY()+30) == color(225) || get(four.getX(),four.getY()+30) == black ||
+      get(three.getX(),three.getY()+30) == color(225) || get(three.getX(),three.getY()+30) == black
   ){
-     newTetromino = true;
-   } else if (one.getY() < 0) { //Tallest block
-     gameLost();
-   } else{startY+=25;} // tetrominoI is called again, blocks move down by 25
+    System.out.println(four.getY()+30); // should stop at ~500 Helpppp
+    System.out.println(get(four.getX(),four.getY()+5) + "=?" + color(225) + "=?" + black);
+    fall = true;
+  }
+  else{
+    fall = false;
+  }
 }
 
 void tetrominoO(){
-  startY += 25;
   TetrisBlock one = new TetrisBlock(startX, startY, yellow,25);
   TetrisBlock two = new TetrisBlock(startX+25, startY, yellow,25);
   TetrisBlock three = new TetrisBlock(startX, startY+25, yellow,25);
@@ -155,17 +242,19 @@ void tetrominoO(){
   two.draw();
   three.draw();
   four.draw();
-      if (get(four.getX(),four.getY()+3) != color(225) || get(four.getX(),four.getY()+3) != color(0) ||
-      get(three.getX(),three.getY()+3) != color(225) || get(three.getX(),three.getY()+3) != color(0)
+  if (get(four.getX(),four.getY()+30) == color(225) || get(four.getX(),four.getY()+30) == black ||
+      get(three.getX(),three.getY()+30) == color(225) || get(three.getX(),three.getY()+30) == black
   ){
-     newTetromino = true;
-   } else if (one.getY() < 0) { //Tallest block
-     gameLost();
-   } else{startY+=25;} // tetrominoI is called again, blocks move down by 25
+    System.out.println(four.getY()+30); // should stop at ~500 Helpppp
+    System.out.println(get(four.getX(),four.getY()+5) + "=?" + color(225) + "=?" + black);
+    fall = true;
+  }
+  else{
+    fall = false;
+  }
 }
 
 void tetrominoS(){
-  startY += 25;
   TetrisBlock one = new TetrisBlock(startX, startY, red,25);
   TetrisBlock two = new TetrisBlock(startX+25, startY, red,25);
   TetrisBlock three = new TetrisBlock(startX, startY+25, red,25);
@@ -174,17 +263,19 @@ void tetrominoS(){
   two.draw();
   three.draw();
   four.draw();
-      if (get(four.getX(),four.getY()+3) != color(225) || get(four.getX(),four.getY()+3) != color(0) ||
-      get(three.getX(),three.getY()+3) != color(225) || get(three.getX(),three.getY()+3) != color(0)
+  if (get(four.getX(),four.getY()+30) == color(225) || get(four.getX(),four.getY()+30) == black ||
+      get(three.getX(),three.getY()+30) == color(225) || get(three.getX(),three.getY()+30) == black
   ){
-     newTetromino = true;
-   } else if (one.getY() < 0) {
-     gameLost();
-   } else{startY+=25;} // tetrominoI is called again, blocks move down by 25
+    System.out.println(four.getY()+30); // should stop at ~500 Helpppp
+    System.out.println(get(four.getX(),four.getY()+5) + "=?" + color(225) + "=?" + black);
+    fall = true;
+  }
+  else{
+    fall = false;
+  }
 }
 
 void tetrominoT(){
-  startY += 25;
   TetrisBlock one = new TetrisBlock(startX, startY, purple,25);
   TetrisBlock two = new TetrisBlock(startX+25, startY, purple,25);
   TetrisBlock three = new TetrisBlock(startX-25, startY, purple,25);
@@ -193,15 +284,17 @@ void tetrominoT(){
   two.draw();
   three.draw();
   four.draw();
-   if (get(four.getX(),four.getY()+3) != color(225) || get(four.getX(),four.getY()+3) != color(0)){
-     newTetromino = true;
-   } else if (one.getY() < 0) {
-     gameLost();
-   } else{startY+=25;} // tetrominoI is called again, blocks move down by 25
+  if (get(four.getX(),four.getY()+30) == color(225) || get(four.getX(),four.getY()+30) == black){
+    System.out.println(four.getY()+30); // should stop at ~500 Helpppp
+    System.out.println(get(four.getX(),four.getY()+5) + "=?" + color(225) + "=?" + black);
+    fall = true;
+  }
+  else{
+    fall = false;
+  }
 }
 
 void tetrominoZ(){
-  startY += 25;
   TetrisBlock one = new TetrisBlock(startX, startY, green,25);
   TetrisBlock two = new TetrisBlock(startX-25, startY, green,25);
   TetrisBlock three = new TetrisBlock(startX, startY+25, green,25);
@@ -210,11 +303,14 @@ void tetrominoZ(){
   two.draw();
   three.draw();
   four.draw();
-      if (get(four.getX(),four.getY()+3) != color(225) || get(four.getX(),four.getY()+3) != color(0) ||
-      get(three.getX(),three.getY()+3) != color(225) || get(three.getX(),three.getY()+3) != color(0)
+  if (get(four.getX(),four.getY()+30) == color(225) || get(four.getX(),four.getY()+30) == black ||
+      get(three.getX(),three.getY()+30) == color(225) || get(three.getX(),three.getY()+30) == black
   ){
-     newTetromino = true;
-   } else if (one.getY() < 0) {
-     gameLost();
-   } else{startY+=25;} // tetrominoI is called again, blocks move down by 25
+    System.out.println(four.getY()+30); // should stop at ~500 Helpppp
+    System.out.println(get(four.getX(),four.getY()+5) + "=?" + color(225) + "=?" + black);
+    fall = true;
+  }
+  else{
+    fall = false;
+  }
 }
