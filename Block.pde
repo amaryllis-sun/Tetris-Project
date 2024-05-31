@@ -2,12 +2,11 @@ class TetrisBlock{
 int x;
 int y;
 color c;
-int h; 
-   public TetrisBlock(int x, int y, color c, int h){
+int h = 25; 
+   public TetrisBlock(int x, int y, color c){
      this.x = x;
      this.y = y;
-     this.c = c;
-     this.h = h;    
+     this.c = c; 
    }
    
    void draw(){
