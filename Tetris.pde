@@ -10,7 +10,7 @@ int randomNum = (int)(Math.random()*7)+1;
 ArrayList<TetrisBlock> currentTetromino = new ArrayList<TetrisBlock>();
 
 // colors
-color blue = color(6, 225, 255);
+color blue= color(6, 225, 255);
 color pink = color(255, 79, 185);
 color orange = color(253, 140, 0);
 color yellow = color(250, 254, 2);
