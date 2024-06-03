@@ -6,7 +6,7 @@ int level;
 int lines;
 boolean fall = true;
 boolean newTetromino = true;
-int randomNum = 2;//(int)(Math.random()*7)+1;
+int randomNum = 1; // (int)(Math.random()*7)+1;
 
 // colors
 color blue= color(6, 225, 255);
@@ -20,6 +20,7 @@ color black= color(0);
 
 // draw grid
 void setup(){
+  noSmooth();
   frameRate(5);
   size(800,800);
   background(0);
@@ -31,26 +32,24 @@ void setup(){
     }
   }
   TetrisBlock test = new TetrisBlock(startX,500,green);
-      test.draw();
+  test.draw();
 }
 
 void draw(){
-  
-  //background(225);
-  // for(int x = 0; x < grid.length; x +=25){ //draws the actual grid 
-  //  for(int y = 0; y < grid[0].length; y+=25){
-  //     grid[x][y].draw();
-  //  }
-  //   TetrisBlock test = new TetrisBlock(startX,500,green);
-  //    test.draw();
-  //}
+  background(225);
+   for(int x = 0; x < grid.length; x +=25){ //draws the actual grid 
+    for(int y = 0; y < grid[0].length; y+=25){
+       grid[x][y].draw();
+    }
+     TetrisBlock test = new TetrisBlock(400,500,green);
+      test.draw();
+  }
   if (newTetromino==true){
     if (randomNum==1){
       if (fall == false){
         newTetromino = false;
-        startY =0; 
-        } else {         
-          print(get(startX, startY));
+        startY = 0; 
+        } else { // fall = true    
           tetrominoI();
           black("tetrominoI");
           startY+=25;
@@ -108,7 +107,15 @@ void gameLost() {
   print("There is no more room to place the tetrominos, you have lost the game!");
   //Will display the final score and level once those methods are added
 }
-  
+
+void keyPressed(){
+  if(keyCode == LEFT){
+       startX -= 25; 
+  }
+  else if(keyCode == RIGHT){
+      startX += 25; 
+  }
+}
   
 void tetrominoI(){
   TetrisBlock one = new TetrisBlock(startX, startY, blue);
@@ -118,15 +125,9 @@ void tetrominoI(){
   one.draw();
   two.draw();
   three.draw();
-  four.draw();
-  //TetrisBlock four_1 = new TetrisBlock(four.getX(), four.getY()+25, four.getColor());
-  //System.out.println("This is"+four.getY());
-  //System.out.println("this too"+ four_1.getY());
-  //System.out.println("color" + four_1.getColor());
-  //System.out.println("black" + color(0)); 
-  if (get(four.getX(),four.getY()+325) != color(225) && get(four.getX(),four.getY()+325) != black){
-    System.out.println(four.getY()+30); // should stop at ~500 Helpppp
-    System.out.println(get(four.getX(),four.getY()+30) + "=?" + color(225) + "=?" + black);
+  System.out.println(four.getY()+75); // should stop at ~500 Helpppp
+  System.out.println(get(four.getX(),four.getY()+75) + "=?" + color(225) + "=?" + black);
+  if (get(four.getX(),four.getY()+1) != color(225) && get(four.getX(),four.getY()+1) != black){
     fall = false;
   }
   else {
@@ -146,8 +147,6 @@ void tetrominoJ(){
   if (get(four.getX(),four.getY()+325) == color(225) || get(four.getX(),four.getY()+325) ==  black ||
       get(three.getX(),three.getY()+325) == color(225) || get(three.getX(),three.getY()+325) == black
   ){
-    System.out.println(four.getY()+30); // should stop at ~500 Helpppp
-    System.out.println(get(four.getX(),four.getY()+5) + "=?" + color(225) + "=?" + black);
     fall = true;
   }
   else{
@@ -329,13 +328,4 @@ void black(String tet){
       three.draw();
       four.draw();
     }
-}
-
-void keyPressed(){
-  if(keyCode == LEFT){
-       startX -= 25; 
-  }
-  else if(keyCode == RIGHT){
-      startX += 25; 
-  }
 }
