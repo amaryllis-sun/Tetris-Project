@@ -17,7 +17,7 @@ int h = 25;
    }
    
    int getX(){
-     return y;
+     return x;
    }
       
    int getY(){
