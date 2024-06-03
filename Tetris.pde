@@ -15,7 +15,7 @@ color yellow= color(250, 254, 2);
 color red= color(246, 0, 1);
 color purple= color(159, 1, 149);
 color green= color(103, 181, 35);
-color  black= color(0);
+color black= color(0);
 
 // draw grid
 void setup(){
@@ -36,7 +36,7 @@ void setup(){
 void draw(){
   if (newTetromino==true){
     //int randomNum = (int)(Math.random()*7)+1;
-    int randomNum = 7;
+    int randomNum = 6;
     if (randomNum==1){
       if (fall == true){
         tetrominoI();
@@ -47,7 +47,7 @@ void draw(){
     if (randomNum==2){
       if (fall == true){
         tetrominoJ();
-     black("tetrominoJ");
+     black("tetrominoJ");  
         startY+=25;
       }
     }
@@ -271,9 +271,9 @@ void black(String tet){
       three.draw();
       four.draw();
     }
-    if (tet.equals("tetrominoO")){ // fix
-      TetrisBlock one = new TetrisBlock(startX, startY-75,  black);
-      TetrisBlock two = new TetrisBlock(startX+25, startY-75,  black);
+    if (tet.equals("tetrominoO")){ 
+      TetrisBlock one = new TetrisBlock(startX, startY-25,  black);
+      TetrisBlock two = new TetrisBlock(startX+25, startY-25,  black);
       TetrisBlock three = new TetrisBlock(startX, startY-50,  black);
       TetrisBlock four = new TetrisBlock(startX+25, startY-50,  black);
       one.draw();
@@ -281,21 +281,21 @@ void black(String tet){
       three.draw();
       four.draw();
     }
-    if (tet.equals("tetrominoS")){ // fix
-      TetrisBlock one = new TetrisBlock(startX, startY-75,  black);
-      TetrisBlock two = new TetrisBlock(startX+25, startY-75,  black);
-      TetrisBlock three = new TetrisBlock(startX, startY-50,  black);
-      TetrisBlock four = new TetrisBlock(startX-25, startY-50,  black);
+    if (tet.equals("tetrominoS")){
+      TetrisBlock one = new TetrisBlock(startX, startY-50, black); //ok
+      TetrisBlock two = new TetrisBlock(startX+25, startY-25, black);
+      TetrisBlock three = new TetrisBlock(startX, startY-25, black); //ok
+      TetrisBlock four = new TetrisBlock(startX-25, startY, black);
       one.draw();
       two.draw();
       three.draw();
       four.draw();
     }
-    if (tet.equals("tetrominoT")){ // fix
-      TetrisBlock one = new TetrisBlock(startX, startY-75, purple);
-      TetrisBlock two = new TetrisBlock(startX+25, startY-75, purple);
-      TetrisBlock three = new TetrisBlock(startX-25, startY-75, purple);
-      TetrisBlock four = new TetrisBlock(startX, startY-50, purple);
+    if (tet.equals("tetrominoT")){
+      TetrisBlock one = new TetrisBlock(startX, startY-50, black); //ok
+      TetrisBlock two = new TetrisBlock(startX+25, startY-25, black);
+      TetrisBlock three = new TetrisBlock(startX-25, startY-25, black);
+      TetrisBlock four = new TetrisBlock(startX, startY-25, black); //ok
       one.draw();
       two.draw();
       three.draw();
