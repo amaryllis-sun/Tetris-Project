@@ -3,7 +3,6 @@ int startY = 25;
 TetrisBlock[][] grid;
 int score;
 int level;
-int lines;
 boolean fall = true;
 boolean newTetromino = true;
 int randomNum = (int)(Math.random()*7)+1;
