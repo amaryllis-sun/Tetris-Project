@@ -1,4 +1,4 @@
-int startX = 300;
+int startX = 150;
 int startY = 25;
 TetrisBlock[][] grid;
 int score;
@@ -21,8 +21,8 @@ color black = color(0);
 // draw grid
 void setup() {
   noSmooth();
-  frameRate(5);
-  size(600, 600);
+  frameRate(10);
+  size(300, 600);
   background(0);
   int gridW = width / 25; // 1 block is 25x25
   int gridH = height / 25;
@@ -101,35 +101,38 @@ void draw() {
         startY += 25;
       }
     }
-  }
- 
-  if (fall == false) {
+    if (fall == false) {
     // restarts, makes new tetromino
     randomNum = (int) (Math.random()*7)+1;
     newTetromino = true;
-    startX = 300;
+    currentTetromino = new ArrayList<TetrisBlock>();
+    startX = 150;
     startY = 25;
     // picks random tetromino
     fall = true;
+    }
+  }
+  if (newTetromino == false){
+    noLoop();
   }
 }
 
 //Is called if a tetromino has exceeded the height of the screen/grid
 void gameLost() {
+  newTetromino = false;
   print("There is no more room to place the tetrominos, you have lost the game!");
-  textSize(50);
+  textSize(10);
   fill(0, 408, 612, 816);
-  text("There is no more room to place the tetrominos, you have lost the game!", 48, 180, -120);
+  text("There is no more room to place the tetrominos, you have lost the game!", 48, 10, -120);
   //Will display the final score and level once those methods are added
    noLoop(); //will stop the draw method from being called
-   newTetromino = false;
 }
 
 boolean checkTopBottom(TetrisBlock block) {
   int gridX = block.getX()/25; // checks the block of the grid that it's at
   int gridY = block.getY()/25;
   // if block touches top, call gameLost()
-  if (gridY -1 <= 0 && grid[gridX][gridY].getColor() != black) { //checks to see if the block is at the top of the grid and it is not black and so therefore gamelost is called 
+  if (gridY-1 <= 0 && grid[gridX][gridY].getColor() != black) { //checks to see if the block is at the top of the grid and it is not black and so therefore gamelost is called 
     gameLost();
     return true;
   }// is this code correct ?
@@ -144,8 +147,8 @@ void updateGrid(TetrisBlock block) {
 }
 
 boolean checkLeft(TetrisBlock block) { //checks to see if the block can move to left; if it cannot move then this function would return true
-  int gridX = block.getX() / 25 - 3; //stores the value of the x value to the left 
-  int gridY = block.getY() / 25;
+  int gridX = block.getX()/25-1; //stores the value of the x value to the left 
+  int gridY = block.getY()/25;
   if(gridX < 0){
     return true; //if gridX is less than 0 or negative, it is out of the grid so it cannot move anymore to the left 
   }
@@ -157,8 +160,8 @@ boolean checkLeft(TetrisBlock block) { //checks to see if the block can move to 
 }
 
 boolean checkRight(TetrisBlock block) {
-  int gridX = block.getX() / 25 + 3; //x value of the block to its right 
-  int gridY = block.getY() / 25;
+  int gridX = block.getX()/25+1; //x value of the block to its right 
+  int gridY = block.getY()/25;
   if(gridX >= grid.length){
     return true; 
   }
