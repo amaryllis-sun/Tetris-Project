@@ -144,7 +144,7 @@ void updateGrid(TetrisBlock block) {
 }
 
 boolean checkLeft(TetrisBlock block) { //checks to see if the block can move to left; if it cannot move then this function would return true
-  int gridX = block.getX() / 25 - 1; //stores the value of the x value to the left 
+  int gridX = block.getX() / 25 - 3; //stores the value of the x value to the left 
   int gridY = block.getY() / 25;
   if(gridX < 0){
     return true; //if gridX is less than 0 or negative, it is out of the grid so it cannot move anymore to the left 
@@ -157,7 +157,7 @@ boolean checkLeft(TetrisBlock block) { //checks to see if the block can move to 
 }
 
 boolean checkRight(TetrisBlock block) {
-  int gridX = block.getX() / 25 + 1; //x value of the block to its right 
+  int gridX = block.getX() / 25 + 3; //x value of the block to its right 
   int gridY = block.getY() / 25;
   if(gridX >= grid.length){
     return true; 
@@ -174,7 +174,7 @@ void keyPressed() {
   // only moves left or right if there's nothing touching on the left or right
   if (keyCode == LEFT) {
     for (TetrisBlock block : currentTetromino) {
-      if (checkLeft(block)) {//if it is true that the block cannot be moved, then canMoveLeft is false and the loop would break
+      if (checkLeft(block)) { //if it is true that the block cannot be moved, then canMoveLeft is false and the loop would break
         canMoveLeft = false;
         break;
       }
@@ -192,7 +192,7 @@ void keyPressed() {
         break;
       }
     }
-    if (canMoveRight) {
+    if (canMoveRight) { //if canMoveRight is true then it would set the xvalues of the tetromino blocks to the right 
         for(TetrisBlock block : currentTetromino){
         block.setX(block.getX()+25);
       }
