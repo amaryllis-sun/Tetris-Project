@@ -48,6 +48,7 @@ void draw() {
       grid[x][y].draw();
     }
   }
+ 
   if (newTetromino) {
     if (randomNum == 1) {
       if (fall == false) {
@@ -102,6 +103,7 @@ void draw() {
       }
     }
   }
+ 
   if (fall == false) {
     // restarts, makes new tetromino
     randomNum = (int) (Math.random()*7)+1;
@@ -120,14 +122,17 @@ void gameLost() {
   fill(0, 408, 612, 816);
   text("There is no more room to place the tetrominos, you have lost the game!", 48, 180, -120);
   //Will display the final score and level once those methods are added
+   noLoop(); //will stop the draw method from being called
+   newTetromino = false;
 }
 
 boolean checkTopBottom(TetrisBlock block) {
   int gridX = block.getX()/25; // checks the block of the grid that it's at
   int gridY = block.getY()/25;
   // if block touches top, call gameLost()
-  if (gridY-1 <= 0) { // error here, calls gameLost() every time new tetromino is created. also, game lost doesnt stop making tetromino
+  if (gridY -1 <= 0 && grid[gridX][gridY].getColor() != black) { //checks to see if the block is at the top of the grid and it is not black and so therefore gamelost is called 
     gameLost();
+    return true;
   }// is this code correct ?
   if (gridY+1 >= grid[0].length || grid[gridX][gridY+1].getColor() != black) return true;
   return false;
@@ -139,10 +144,13 @@ void updateGrid(TetrisBlock block) {
   grid[gridX][gridY] = block;
 }
 
-boolean checkLeft(TetrisBlock block) {
-  int gridX = block.getX() / 25 - 1;
+boolean checkLeft(TetrisBlock block) { //checks to see if the block can move to left; if it cannot move then this function would return true
+  int gridX = block.getX() / 25 - 1; //stores the value of the x value to the left 
   int gridY = block.getY() / 25;
-  if (gridX < 0 || gridX >= grid.length || grid[gridX][gridY].getColor() != black) {  // checks edges too --> doesnt work !!!! 
+  if(gridX < 0){
+    return true; //if gridX is less than 0 or negative, it is out of the grid so it cannot move anymore to the left 
+  }
+   if(grid[gridX][gridY].getColor() != black) {  // checks edges too --> doesnt work !!!! 
   // if you're reading this, try bringing a block off to the side, instead of it continuing to fall it gives an error
     return true;
   }
@@ -150,9 +158,12 @@ boolean checkLeft(TetrisBlock block) {
 }
 
 boolean checkRight(TetrisBlock block) {
-  int gridX = block.getX() / 25 + 1;
+  int gridX = block.getX() / 25 + 1; //x value of the block to its right 
   int gridY = block.getY() / 25;
-  if (gridX < 0 || gridX >= grid.length || grid[gridX][gridY].getColor() != black) {
+  if(gridX >= grid.length){
+    return true; 
+  }
+  if (grid[gridX][gridY].getColor() != black) {
     return true;
   }
   return false;
@@ -164,13 +175,16 @@ void keyPressed() {
   // only moves left or right if there's nothing touching on the left or right
   if (keyCode == LEFT) {
     for (TetrisBlock block : currentTetromino) {
-      if (checkLeft(block)) {
+      if (checkLeft(block)) {//if it is true that the block cannot be moved, then canMoveLeft is false and the loop would break
         canMoveLeft = false;
         break;
       }
     }
-    if (canMoveLeft) {
-      startX -= 25;
+    if (canMoveLeft) { //if canMoveleft is true then it would set the xvalues of the tetromino blocks to the left 
+      for(TetrisBlock block : currentTetromino){
+        block.setX(block.getX()-25);
+      }
+    startX -=25; 
     }
   } else if (keyCode == RIGHT) {
     for (TetrisBlock block : currentTetromino) {
@@ -180,7 +194,10 @@ void keyPressed() {
       }
     }
     if (canMoveRight) {
-      startX += 25;
+        for(TetrisBlock block : currentTetromino){
+        block.setX(block.getX()+25);
+      }
+    startX +=25;
     }
   }
 }
