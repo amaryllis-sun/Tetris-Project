@@ -17,7 +17,7 @@ int h = 25;
    }
    
    int getX(){
-     return y;
+     return x;
    }
       
    int getY(){
@@ -42,4 +42,5 @@ int h = 25;
    void removeBlock(){
      this.c=color(0);
    }
+
 }
