@@ -1,8 +1,8 @@
 int startX = 150;
 int startY = 25;
 TetrisBlock[][] grid;
-int score;
-int level;
+int score = 0; //start off with zero as a score 
+int level = 0;
 boolean fall = true;
 boolean newTetromino = true;
 int randomNum = (int)(Math.random()*7)+1;
@@ -467,8 +467,12 @@ void clearRow(){
      }
    }
    }
+     score += 100; 
       y++;
-  
+      if(score > 100){
+        if(score % 100 == 0 || score % 100 != 0){
+          level = score/100; 
+        }
    }
 }
   
