@@ -2,7 +2,7 @@ int startX = 150;
 int startY = 25;
 TetrisBlock[][] grid;
 int score = 0; //start off with zero as a score 
-int level = 0;
+int level = 1;
 boolean fall = true;
 boolean newTetromino = true;
 int randomNum = (int)(Math.random()*7)+1;
@@ -23,8 +23,9 @@ color black = color(0);
 // draw grid
 void setup() {
   // f = createFont("tetris-2-bombliss-credits-font.ttf", 20);
+  int currentFramerate = 5; 
   noSmooth();
-  frameRate(5); // speed, fix when we do levels
+  frameRate(currentFramerate * level); // speed, fix when we do levels
   size(300, 600);
   background(0);
   int gridW = width / 25; // 1 block is 25x25
@@ -36,8 +37,8 @@ void setup() {
       grid[x][y].draw();
     }
   }
-  TetrisBlock test = new TetrisBlock(startX, 500, green);
-  test.draw();
+  //TetrisBlock test = new TetrisBlock(startX, 500, green);
+  //test.draw();
 }
 
 void draw() {
@@ -108,7 +109,7 @@ void draw() {
     clearRow();
     if (fall == false) {
     // restarts, makes new tetromino
-    randomNum =1;//int) (Math.random()*7)+1;
+    randomNum = (int) (Math.random()*7)+1;
     newTetromino = true;
     currentTetromino = new ArrayList<TetrisBlock>();
     startX = 150;
@@ -132,6 +133,8 @@ void gameLost() {
   fill(0, 408, 612, 816);
   text("No more room to place", 50, 300, -120);
   text("the tetrominos, you lose!", 50, 330, -120);
+  text("Your final score is " + score, 50, 360, -120);
+  text("Your final level is " + level, 50, 380, -120);
   //Will display the final score and level once those methods are added
    noLoop(); //will stop the draw method from being called
 }
@@ -466,13 +469,16 @@ void clearRow(){
        grid[x][y1].setColor(prevColor); 
      }
    }
-   }
-     score += 100; 
-      y++;
+    score += 100; 
       if(score > 100){
         if(score % 100 == 0 || score % 100 != 0){
           level = score/100; 
         }
    }
+    
+   }
+      y++;
 }
+}
+
   
