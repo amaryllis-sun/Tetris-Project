@@ -26,11 +26,7 @@ void setup() {
   int currentFramerate = 5; 
   noSmooth();
   frameRate(currentFramerate * level); // speed, fix when we do levels
-<<<<<<< HEAD
-  size(300, 600);
-=======
   size(600, 600);
->>>>>>> Amaryllis
   background(0);
   int gridW = width / 25; // 1 block is 25x25
   int gridH = height / 25;
@@ -49,17 +45,11 @@ void draw() {
   background(225);
   int gridW = width / 25;
   int gridH = height / 25;
-<<<<<<< HEAD
-  // draws the actual grid
-=======
->>>>>>> Amaryllis
   for (int x = 0; x < gridW; x++) { 
     for (int y = 0; y < gridH; y++) {
       grid[x][y].draw();
     }
   }
-<<<<<<< HEAD
-=======
   //Draws the sidebar for the points and level display
   fill(0);
   rect(width - 150, 0, 150, height);
@@ -68,7 +58,6 @@ void draw() {
   textSize(20);
   text("Level: " + level, width - 130, 50);
   text("Points: " + score, width - 130, 100);
->>>>>>> Amaryllis
  
   if (newTetromino) {
     currentTetromino = new ArrayList<TetrisBlock>();
@@ -144,30 +133,19 @@ void draw() {
 
 //Is called if a tetromino has exceeded the height of the screen/grid
 void gameLost() {
-<<<<<<< HEAD
-=======
   fill(0);
   rect(25, 250, 250, 150, 28);
->>>>>>> Amaryllis
   newTetromino = false;
   print("There is no more room to place the tetrominos, you have lost the game!");
   textSize(20);
   //textFont(f);
   fill(0, 408, 612, 816);
   text("No more room to place", 50, 300, -120);
-<<<<<<< HEAD
-  text("the tetrominos, you lose!", 50, 330, -120);
-  text("Your final score is " + score, 50, 360, -120);
-  text("Your final level is " + level, 50, 380, -120);
-  //Will display the final score and level once those methods are added
-   noLoop(); //will stop the draw method from being called
-=======
   text("the tetrominos, you lose!", 50, 320, -120);
   text("Your final score is " + score, 50, 360, -120);
   text("Your final level is " + level, 50, 380, -120);
   //Will display the final score and level once those methods are added
   noLoop(); //will stop the draw method from being called
->>>>>>> Amaryllis
 }
 
 // checks if tetromino is at the top or bottom of the grid or collides with another block
@@ -208,11 +186,7 @@ boolean checkLeft(TetrisBlock block) { //checks to see if the block can move to 
 }
 
 boolean checkRight(TetrisBlock block) {
-<<<<<<< HEAD
-  int gridX = block.getX()/25+1; //x value of the block to its right 
-=======
   int gridX = block.getX()/25+7; //x value of the block to its right 
->>>>>>> Amaryllis
   int gridY = block.getY()/25;
   if(gridX >= grid.length){
     return true; 
