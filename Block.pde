@@ -42,4 +42,5 @@ int h = 25;
    void removeBlock(){
      this.c=color(0);
    }
+
 }

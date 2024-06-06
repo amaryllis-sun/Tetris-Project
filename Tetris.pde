@@ -24,7 +24,7 @@ color black = color(0);
 void setup() {
   // f = createFont("tetris-2-bombliss-credits-font.ttf", 20);
   noSmooth();
-  frameRate(10); // speed, fix when we do levels
+  frameRate(5); // speed, fix when we do levels
   size(300, 600);
   background(0);
   int gridW = width / 25; // 1 block is 25x25
@@ -105,9 +105,10 @@ void draw() {
         startY += 25;
       }
     }
+    clearRow();
     if (fall == false) {
     // restarts, makes new tetromino
-    randomNum = (int) (Math.random()*7)+1;
+    randomNum =1;//int) (Math.random()*7)+1;
     newTetromino = true;
     currentTetromino = new ArrayList<TetrisBlock>();
     startX = 150;
@@ -116,6 +117,7 @@ void draw() {
     fall = true;
     }
   }
+   clearRow();
   if (newTetromino == false){
     noLoop();
   }
@@ -126,7 +128,7 @@ void gameLost() {
   newTetromino = false;
   print("There is no more room to place the tetrominos, you have lost the game!");
   textSize(20);
-  textFont(f);
+  //textFont(f);
   fill(0, 408, 612, 816);
   text("No more room to place", 50, 300, -120);
   text("the tetrominos, you lose!", 50, 330, -120);
@@ -436,3 +438,37 @@ void black(String tet){
       four.draw();
     }
 }
+
+void clearRow(){
+   int gridW = width / 25; // 1 block is 25x25
+   int gridH = height / 25;
+   int y = 0;
+  
+   //check to see if any rows have all blocks 
+   while(y < gridH){
+     boolean coloredRow = true; 
+     for(int x =0; x< gridW; x++){
+       if(grid[x][y].getColor() == black){
+         coloredRow = false;
+         break; //if there is one black block in that row, for loop breaks (no need to continue looking) 
+       }
+     }
+ 
+   //once a row is found to be all colored, then it would be turned all black
+   if(coloredRow == true){
+     for(int x =0; x < gridW; x++){
+       grid[x][y].setColor(black);
+     }
+        //then we shift everything down 
+   for(int y1 = y; y1 > 0; y1--){ //starting off with the row we found that is all colored and going above to shift all them down 
+     for(int x =0; x < gridW ; x++){
+       color prevColor = grid[x][y1-1].getColor(); //access the color of the blocks above in order to shift them all done 
+       grid[x][y1].setColor(prevColor); 
+     }
+   }
+   }
+      y++;
+  
+   }
+}
+  
