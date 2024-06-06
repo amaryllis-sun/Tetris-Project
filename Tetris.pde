@@ -18,10 +18,13 @@ color purple = color(159, 1, 149);
 color green = color(103, 181, 35);
 color black = color(0);
 
+// Pfont f; 
+
 // draw grid
 void setup() {
+  // f = createFont("tetris-2-bombliss-credits-font.ttf", 20);
   noSmooth();
-  frameRate(10);
+  frameRate(10); // speed, fix when we do levels
   size(300, 600);
   background(0);
   int gridW = width / 25; // 1 block is 25x25
@@ -49,6 +52,7 @@ void draw() {
   }
  
   if (newTetromino) {
+    currentTetromino = new ArrayList<TetrisBlock>();
     if (randomNum == 1) {
       if (fall == false) {
         newTetromino = false;
@@ -121,29 +125,37 @@ void draw() {
 void gameLost() {
   newTetromino = false;
   print("There is no more room to place the tetrominos, you have lost the game!");
-  textSize(10);
+  textSize(20);
+  textFont(f);
   fill(0, 408, 612, 816);
-  text("There is no more room to place the tetrominos, you have lost the game!", 48, 10, -120);
+  text("No more room to place", 50, 300, -120);
+  text("the tetrominos, you lose!", 50, 330, -120);
   //Will display the final score and level once those methods are added
    noLoop(); //will stop the draw method from being called
 }
 
+// checks if tetromino is at the top or bottom of the grid or collides with another block
 boolean checkTopBottom(TetrisBlock block) {
-  int gridX = block.getX()/25; // checks the block of the grid that it's at
-  int gridY = block.getY()/25;
+  int gridX = block.getX() / 25; // checks the block of the grid that it's at
+  int gridY = block.getY() / 25;
   // if block touches top, call gameLost()
-  if (gridY-1 <= 0 && grid[gridX][gridY].getColor() != black) { //checks to see if the block is at the top of the grid and it is not black and so therefore gamelost is called 
+  if (gridY<=0 || (grid[gridX][gridY-1].getColor() != black && !currentTetromino.contains(grid[gridX][gridY - 1]))) {
     gameLost();
     return true;
-  }// is this code correct ?
-  if (gridY+1 >= grid[0].length || grid[gridX][gridY+1].getColor() != black) return true;
+  }
+  // if block touches bottom or another block, stop falling
+  if (gridY + 1 >= grid[0].length || (grid[gridX][gridY + 1].getColor() != black && !currentTetromino.contains(grid[gridX][gridY + 1]))) {
+    return true;
+  }
   return false;
 }
 
-void updateGrid(TetrisBlock block) {
-  int gridX = block.getX() / 25;
-  int gridY = block.getY() / 25;
-  grid[gridX][gridY] = block;
+void updateGrid(ArrayList<TetrisBlock> tetromino) {
+    for (TetrisBlock block : tetromino) {
+        int gridX = block.getX() / 25;
+        int gridY = block.getY() / 25;
+        grid[gridX][gridY] = block;
+    }
 }
 
 boolean checkLeft(TetrisBlock block) { //checks to see if the block can move to left; if it cannot move then this function would return true
@@ -152,7 +164,7 @@ boolean checkLeft(TetrisBlock block) { //checks to see if the block can move to 
   if(gridX < 0){
     return true; //if gridX is less than 0 or negative, it is out of the grid so it cannot move anymore to the left 
   }
-   if(grid[gridX][gridY].getColor() != black) {  // checks edges too --> doesnt work !!!! 
+  if (grid[gridX][gridY].getColor() != black && !currentTetromino.contains(grid[gridX][gridY])) {
   // if you're reading this, try bringing a block off to the side, instead of it continuing to fall it gives an error
     return true;
   }
@@ -165,7 +177,7 @@ boolean checkRight(TetrisBlock block) {
   if(gridX >= grid.length){
     return true; 
   }
-  if (grid[gridX][gridY].getColor() != black) {
+  if (grid[gridX][gridY].getColor() != black && !currentTetromino.contains(grid[gridX][gridY])) {
     return true;
   }
   return false;
@@ -222,10 +234,7 @@ void tetrominoI() {
 
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
-    updateGrid(one);
-    updateGrid(two);
-    updateGrid(three);
-    updateGrid(four);
+    updateGrid(currentTetromino);
   } else {
     fall = true;
   }
@@ -240,12 +249,13 @@ void tetrominoJ() {
   two.draw();
   three.draw();
   four.draw();
+  currentTetromino.add(one);
+  currentTetromino.add(two);
+  currentTetromino.add(three);
+  currentTetromino.add(four);
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
-    updateGrid(one);
-    updateGrid(two);
-    updateGrid(three);
-    updateGrid(four);
+    updateGrid(currentTetromino);
   } else {
     fall = true;
   }
@@ -260,12 +270,13 @@ void tetrominoL() {
   two.draw();
   three.draw();
   four.draw();
+  currentTetromino.add(one);
+  currentTetromino.add(two);
+  currentTetromino.add(three);
+  currentTetromino.add(four);
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
-    updateGrid(one);
-    updateGrid(two);
-    updateGrid(three);
-    updateGrid(four);
+    updateGrid(currentTetromino);
   } else {
     fall = true;
   }
@@ -280,12 +291,13 @@ void tetrominoO(){
   two.draw();
   three.draw();
   four.draw();
+  currentTetromino.add(one);
+  currentTetromino.add(two);
+  currentTetromino.add(three);
+  currentTetromino.add(four);
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
-    updateGrid(one);
-    updateGrid(two);
-    updateGrid(three);
-    updateGrid(four);
+    updateGrid(currentTetromino);
   } else {
     fall = true;
   }
@@ -300,12 +312,13 @@ void tetrominoS(){
   two.draw();
   three.draw();
   four.draw();
+  currentTetromino.add(one);
+  currentTetromino.add(two);
+  currentTetromino.add(three);
+  currentTetromino.add(four);
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
-    updateGrid(one);
-    updateGrid(two);
-    updateGrid(three);
-    updateGrid(four);
+    updateGrid(currentTetromino);
   } else {
     fall = true;
   }
@@ -320,17 +333,17 @@ void tetrominoT(){
   two.draw();
   three.draw();
   four.draw();
+  currentTetromino.add(one);
+  currentTetromino.add(two);
+  currentTetromino.add(three);
+  currentTetromino.add(four);
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
-    updateGrid(one);
-    updateGrid(two);
-    updateGrid(three);
-    updateGrid(four);
+    updateGrid(currentTetromino);
   } else {
     fall = true;
   }
 }
-
 void tetrominoZ(){
   TetrisBlock one = new TetrisBlock(startX, startY, green);
   TetrisBlock two = new TetrisBlock(startX-25, startY, green);
@@ -340,17 +353,17 @@ void tetrominoZ(){
   two.draw();
   three.draw();
   four.draw();
+  currentTetromino.add(one);
+  currentTetromino.add(two);
+  currentTetromino.add(three);
+  currentTetromino.add(four);
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
-    updateGrid(one);
-    updateGrid(two);
-    updateGrid(three);
-    updateGrid(four);
+    updateGrid(currentTetromino);
   } else {
     fall = true;
   }
 }
-
 //Makes a black tetromino that follows the colored one while falling
 //This makes it so that the colored tetromino falling isn't just one vertical line
 void black(String tet){
