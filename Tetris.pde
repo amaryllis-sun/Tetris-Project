@@ -1,3 +1,4 @@
+PFont font;
 int startX = 150;
 int startY = 25;
 TetrisBlock[][] grid;
@@ -21,8 +22,8 @@ color black = color(0);
 // Pfont f; 
 
 // draw grid
-void setup() {
-  // f = createFont("tetris-2-bombliss-credits-font.ttf", 20);
+void setup(){
+  font = createFont("tetris-2-bombliss-credits-font.ttf", 20);
   int currentFramerate = 5; 
   noSmooth();
   frameRate(currentFramerate * level); // speed, fix when we do levels
@@ -138,8 +139,8 @@ void gameLost() {
   newTetromino = false;
   print("There is no more room to place the tetrominos, you have lost the game!");
   textSize(20);
-  //textFont(f);
-  fill(0, 408, 612, 816);
+  textFont(font);
+  fill(255, 408, 612, 816);
   text("No more room to place", 50, 300, -120);
   text("the tetrominos, you lose!", 50, 320, -120);
   text("Your final score is " + score, 50, 360, -120);
