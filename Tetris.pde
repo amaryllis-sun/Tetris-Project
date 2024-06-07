@@ -5,7 +5,8 @@ int score = 0; //start off with zero as a score
 int level = 1;
 boolean fall = true;
 boolean newTetromino = true;
-int randomNum = (int)(Math.random()*7)+1;
+int randomNum = 4;
+//int randomNum = (int)(Math.random()*7)+1;
 ArrayList<TetrisBlock> currentTetromino = new ArrayList<TetrisBlock>();
 
 // colors
@@ -116,7 +117,8 @@ void draw() {
     clearRow();
     if (fall == false) {
     // restarts, makes new tetromino
-    randomNum = (int) (Math.random()*7)+1;
+    //randomNum = (int) (Math.random()*7)+1;
+    randomNum = 4;
     newTetromino = true;
     currentTetromino = new ArrayList<TetrisBlock>();
     startX = 150;
@@ -452,7 +454,7 @@ void black(String tet){
 }
 
 void clearRow(){
-   int gridW = width / 25; // 1 block is 25x25
+   double gridW = width / 25-6; // 1 block is 25x25
    int gridH = height / 25;
    int y = 0;
   
