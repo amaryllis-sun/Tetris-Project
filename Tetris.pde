@@ -1,3 +1,4 @@
+PFont font;
 int startX = 150;
 int startY = 25;
 TetrisBlock[][] grid;
@@ -5,8 +6,8 @@ int score = 0; //start off with zero as a score
 int level = 1;
 boolean fall = true;
 boolean newTetromino = true;
-int randomNum = 4;
-//int randomNum = (int)(Math.random()*7)+1;
+//int randomNum = 4;
+int randomNum = (int)(Math.random()*7)+1;
 ArrayList<TetrisBlock> currentTetromino = new ArrayList<TetrisBlock>();
 
 // colors
@@ -22,8 +23,8 @@ color black = color(0);
 // Pfont f; 
 
 // draw grid
-void setup() {
-  // f = createFont("tetris-2-bombliss-credits-font.ttf", 20);
+void setup(){
+  font = createFont("tetris-2-bombliss-credits-font.ttf", 20);
   int currentFramerate = 5; 
   noSmooth();
   frameRate(currentFramerate * level); // speed, fix when we do levels
@@ -117,8 +118,8 @@ void draw() {
     clearRow();
     if (fall == false) {
     // restarts, makes new tetromino
-    //randomNum = (int) (Math.random()*7)+1;
-    randomNum = 4;
+    randomNum = (int) (Math.random()*7)+1;
+    //randomNum = 4;
     newTetromino = true;
     currentTetromino = new ArrayList<TetrisBlock>();
     startX = 150;
@@ -140,8 +141,8 @@ void gameLost() {
   newTetromino = false;
   print("There is no more room to place the tetrominos, you have lost the game!");
   textSize(20);
-  //textFont(f);
-  fill(0, 408, 612, 816);
+  textFont(font);
+  fill(255, 408, 612, 816);
   text("No more room to place", 50, 300, -120);
   text("the tetrominos, you lose!", 50, 320, -120);
   text("Your final score is " + score, 50, 360, -120);
