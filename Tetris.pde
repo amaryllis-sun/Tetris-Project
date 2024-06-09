@@ -8,7 +8,7 @@ boolean fall = true;
 boolean newTetromino = true;
 int randomNum = (int)(Math.random()*7)+1;
 ArrayList<TetrisBlock> currentTetromino = new ArrayList<TetrisBlock>();
-int rotation = 0;
+int currentSpeed = 2;
 
 // colors
 color blue= color(6, 225, 255);
@@ -23,7 +23,6 @@ color black = color(0);
 // draw grid
 void setup(){
   font = createFont("tetris-2-bombliss-credits-font.ttf", 20);
-  frameRate(10);
   size(400, 600);
   background(0);
   int gridW = width / 25; // 1 block is 25x25
@@ -41,6 +40,7 @@ void setup(){
 
 void draw() {
   background(225);
+  frameRate(currentSpeed);
   
   int gridW = width / 25;
   int gridH = height / 25;
@@ -233,6 +233,7 @@ void keyPressed() {
       }
     }
     if (canMoveLeft) {
+      frameRate(10);
       for(TetrisBlock block : currentTetromino){
         block.setX(block.getX() - 25);
       }
@@ -246,6 +247,7 @@ void keyPressed() {
       }
     }
     if (canMoveRight) {
+      frameRate(10);
       for(TetrisBlock block : currentTetromino){
         block.setX(block.getX() + 25);
       }
