@@ -9,6 +9,7 @@ boolean newTetromino = true;
 //int randomNum = 4;
 int randomNum = (int)(Math.random()*7)+1;
 ArrayList<TetrisBlock> currentTetromino = new ArrayList<TetrisBlock>();
+int currentFramerate = 5; 
 
 // colors
 color blue= color(6, 225, 255);
@@ -20,15 +21,12 @@ color purple = color(159, 1, 149);
 color green = color(103, 181, 35);
 color black = color(0);
 
-// Pfont f; 
-
 // draw grid
 void setup(){
   font = createFont("tetris-2-bombliss-credits-font.ttf", 20);
-  int currentFramerate = 5; 
   noSmooth();
-  frameRate(currentFramerate * level); // speed, fix when we do levels
-  size(600, 600);
+  frameRate(currentFramerate * level); // when we do levels, make sure to update currentFramerate pls
+  size(500, 600);
   background(0);
   int gridW = width / 25; // 1 block is 25x25
   int gridH = height / 25;
@@ -44,6 +42,7 @@ void setup(){
 }
 
 void draw() {
+  frameRate(currentFramerate);
   background(225);
   int gridW = width / 25;
   int gridH = height / 25;
@@ -58,6 +57,7 @@ void draw() {
   fill(255);
   textAlign(LEFT);
   textSize(20);
+  textFont(font);
   text("Level: " + level, width - 130, 50);
   text("Points: " + score, width - 130, 100);
  
@@ -189,9 +189,9 @@ boolean checkLeft(TetrisBlock block) { //checks to see if the block can move to 
 }
 
 boolean checkRight(TetrisBlock block) {
-  int gridX = block.getX()/25+7; //x value of the block to its right 
+  int gridX = block.getX()/25+1; //x value of the block to its right 
   int gridY = block.getY()/25;
-  if(gridX >= grid.length){
+  if(gridX >= grid.length-6.75){
     return true; 
   }
   if (grid[gridX][gridY].getColor() != black && !currentTetromino.contains(grid[gridX][gridY])) {
@@ -230,6 +230,9 @@ void keyPressed() {
       }
     startX +=25;
     }
+  }
+  else if (keyCode == DOWN){
+    frameRate(10);
   }
 }
 

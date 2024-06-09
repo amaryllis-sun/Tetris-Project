@@ -11,7 +11,7 @@ int h = 25;
    
    void draw(){
      fill(c);
-     stroke(225);
+     stroke(100);
      strokeWeight(1);
      square(x,y,h);
    }
@@ -32,13 +32,11 @@ int h = 25;
    color getColor(){
      return c; 
    }
-   // for checking work
-   void printXY(){
-     System.out.println(x+","+y);
-   }
+   
    void setColor(color c){
      this.c=c;
    }
+   
    void removeBlock(){
      this.c=color(0);
    }
