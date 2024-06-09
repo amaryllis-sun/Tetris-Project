@@ -6,9 +6,11 @@ int score = 0; //start off with zero as a score
 int level = 1;
 boolean fall = true;
 boolean newTetromino = true;
-int randomNum = (int)(Math.random()*7)+1;
+int randomNum = 3;//(int)(Math.random()*7)+1;
 ArrayList<TetrisBlock> currentTetromino = new ArrayList<TetrisBlock>();
 int currentSpeed = 2;
+//boolean rotated; 
+
 
 // colors
 color blue= color(6, 225, 255);
@@ -56,6 +58,7 @@ void draw() {
   fill(255);
   textAlign(LEFT);
   textSize(20);
+  //textFont(font);
   textFont(font);
   text("Level: " + level, width - 130, 50);
   text("Points: " + score, width - 130, 100);
@@ -88,12 +91,24 @@ void draw() {
     }
     if (randomNum == 3) {
       if (fall == true) {
+        //if(rotated == false){
         for (TetrisBlock block : currentTetromino) {
           block.setColor(black);
         }
         updateGrid(currentTetromino);
         tetrominoL();
         startY += 25;
+    //  }
+      //else{
+      //  for (TetrisBlock block : currentTetromino) {
+      //    block.setColor(black);
+      //  }
+      //  updateGrid(currentTetromino);
+      //  rotatedtetrominoL();
+      //  startY += 25;
+        
+      //}
+      //rotated = false; idk how to make the next tetromino stay the same 
       }
     }
     if (randomNum == 4) {
@@ -136,9 +151,32 @@ void draw() {
         startY += 25;
       }
     }
+    // add a higher chance of getting the easier blocks (so the player can level up more)
+    if (randomNum == 8) {
+      if (fall == true) {
+        for (TetrisBlock block : currentTetromino) {
+          block.setColor(black);
+        }
+        updateGrid(currentTetromino);
+        tetrominoI();
+        startY += 25;
+      }
+    }
+    if (randomNum == 9) {
+      if (fall == true) {
+        for (TetrisBlock block : currentTetromino) {
+          block.setColor(black);
+        }
+        updateGrid(currentTetromino);
+        tetrominoO();
+
+        startY += 25;
+      }
+    }
     clearRow();
     if (fall == false) {
     // restarts, makes new tetromino
+    randomNum = 3;//(int) (Math.random()*9)+1;
     randomNum = (int) (Math.random()*7)+1;
     //randomNum = 4;
     newTetromino = true;
@@ -256,6 +294,9 @@ void keyPressed() {
   } else if (keyCode == DOWN) {
     frameRate(10);
   } else if (keyCode == UP) {
+   // rotated = true; 
+    println("UP arrow key pressed");  // Debug print for UP arrow key
+    //rotatedtetrominoL();
     println("UP arrow key pressed");  // Debug print for UP arrow key
   }
 }
@@ -324,6 +365,29 @@ void tetrominoL() {
     fall = true;
   }
 }
+
+//void rotatedtetrominoL() {
+//  TetrisBlock one = new TetrisBlock(startX+25, startY, orange);
+//  TetrisBlock two = new TetrisBlock(startX+25, startY + 25, orange);
+//  TetrisBlock three = new TetrisBlock(startX, startY + 25, orange);
+//  TetrisBlock four = new TetrisBlock(startX -25, startY+25 , orange);
+//  one.draw();
+//  two.draw();
+//  three.draw();
+//  four.draw();
+//  currentTetromino.add(one);
+//  currentTetromino.add(two);
+//  currentTetromino.add(three);
+//  currentTetromino.add(four);
+//  if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
+//    fall = false;
+//    updateGrid(currentTetromino);
+//  } else {
+//    fall = true;
+//  }
+//}
+
+
 
 void tetrominoO(){
   TetrisBlock one = new TetrisBlock(startX, startY, yellow);
