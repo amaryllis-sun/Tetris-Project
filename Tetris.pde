@@ -8,7 +8,7 @@ boolean fall = true;
 boolean newTetromino = true;
 int randomNum = (int)(Math.random()*7)+1;
 ArrayList<TetrisBlock> currentTetromino = new ArrayList<TetrisBlock>();
-int currentFramerate = 5; 
+int rotation = 0;
 
 // colors
 color blue= color(6, 225, 255);
@@ -23,8 +23,7 @@ color black = color(0);
 // draw grid
 void setup(){
   font = createFont("tetris-2-bombliss-credits-font.ttf", 20);
-  noSmooth();
-  frameRate(currentFramerate * level); // when we do levels, make sure to update currentFramerate pls
+  frameRate(10);
   size(400, 600);
   background(0);
   int gridW = width / 25; // 1 block is 25x25
@@ -41,7 +40,6 @@ void setup(){
 }
 
 void draw() {
-  frameRate(currentFramerate);
   background(225);
   
   int gridW = width / 25;
@@ -179,7 +177,7 @@ boolean checkTopBottom(TetrisBlock block) {
   int gridX = block.getX() / 25; // checks the block of the grid that it's at
   int gridY = block.getY() / 25;
   // if block touches top, call gameLost()
-  if (gridY<=0){//|| (grid[gridX][gridY-1].getColor() != black && !currentTetromino.contains(grid[gridX][gridY - 1]))) {
+  if ((gridY<=0) || (grid[gridX][gridY-1].getColor() != black && !currentTetromino.contains(grid[gridX][gridY - 1]))) {
     gameLost();
     return true;
   }
