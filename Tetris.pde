@@ -11,6 +11,7 @@ ArrayList<TetrisBlock> currentTetromino = new ArrayList<TetrisBlock>();
 int currentSpeed = 2;
 //boolean rotated; 
 
+
 // colors
 color blue= color(6, 225, 255);
 color pink = color(255, 79, 185);
@@ -58,6 +59,7 @@ void draw() {
   textAlign(LEFT);
   textSize(20);
   //textFont(font);
+  textFont(font);
   text("Level: " + level, width - 130, 50);
   text("Points: " + score, width - 130, 100);
  
@@ -167,6 +169,7 @@ void draw() {
         }
         updateGrid(currentTetromino);
         tetrominoO();
+
         startY += 25;
       }
     }
@@ -174,6 +177,7 @@ void draw() {
     if (fall == false) {
     // restarts, makes new tetromino
     randomNum = 3;//(int) (Math.random()*9)+1;
+    randomNum = (int) (Math.random()*7)+1;
     //randomNum = 4;
     newTetromino = true;
     currentTetromino = new ArrayList<TetrisBlock>();
@@ -293,6 +297,7 @@ void keyPressed() {
    // rotated = true; 
     println("UP arrow key pressed");  // Debug print for UP arrow key
     //rotatedtetrominoL();
+    println("UP arrow key pressed");  // Debug print for UP arrow key
   }
 }
 
@@ -502,3 +507,4 @@ void clearRow(){
       y++;
 }
 }
+
