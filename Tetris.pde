@@ -1,3 +1,4 @@
+PFont font;
 int startX = 150;
 int startY = 25;
 TetrisBlock[][] grid;
@@ -5,8 +6,10 @@ int score = 0; //start off with zero as a score
 int level = 1;
 boolean fall = true;
 boolean newTetromino = true;
-int randomNum = (int)(Math.random()*7)+1;
+int randomNum = 3;//(int)(Math.random()*7)+1;
 ArrayList<TetrisBlock> currentTetromino = new ArrayList<TetrisBlock>();
+int currentSpeed = 2;
+//boolean rotated; 
 
 // colors
 color blue= color(6, 225, 255);
@@ -18,15 +21,10 @@ color purple = color(159, 1, 149);
 color green = color(103, 181, 35);
 color black = color(0);
 
-// Pfont f; 
-
 // draw grid
-void setup() {
-  // f = createFont("tetris-2-bombliss-credits-font.ttf", 20);
-  int currentFramerate = 5; 
-  noSmooth();
-  frameRate(currentFramerate * level); // speed, fix when we do levels
-  size(600, 600);
+void setup(){
+  font = createFont("tetris-2-bombliss-credits-font.ttf", 20);
+  size(400, 600);
   background(0);
   int gridW = width / 25; // 1 block is 25x25
   int gridH = height / 25;
@@ -43,6 +41,8 @@ void setup() {
 
 void draw() {
   background(225);
+  frameRate(currentSpeed);
+  
   int gridW = width / 25;
   int gridH = height / 25;
   for (int x = 0; x < gridW; x++) { 
@@ -50,12 +50,14 @@ void draw() {
       grid[x][y].draw();
     }
   }
+  
   //Draws the sidebar for the points and level display
   fill(0);
   rect(width - 150, 0, 150, height);
   fill(255);
   textAlign(LEFT);
   textSize(20);
+  //textFont(font);
   text("Level: " + level, width - 130, 50);
   text("Points: " + score, width - 130, 100);
  
@@ -65,58 +67,114 @@ void draw() {
       if (fall == false) {
         newTetromino = false;
         startY = 0;
-      } else { // fall = true    
+      } 
+      else { // fall = true  
+        for (TetrisBlock block : currentTetromino) {
+          block.setColor(black);
+        }
+        updateGrid(currentTetromino);
         tetrominoI();
-        black("tetrominoI");
         startY += 25;
       }
     }
     if (randomNum == 2) {
       if (fall == true) {
+        for (TetrisBlock block : currentTetromino) {
+          block.setColor(black);
+        }
+        updateGrid(currentTetromino);
         tetrominoJ();
-        black("tetrominoJ");
         startY += 25;
       }
     }
     if (randomNum == 3) {
       if (fall == true) {
+        //if(rotated == false){
+        for (TetrisBlock block : currentTetromino) {
+          block.setColor(black);
+        }
+        updateGrid(currentTetromino);
         tetrominoL();
-        black("tetrominoL");
         startY += 25;
+    //  }
+      //else{
+      //  for (TetrisBlock block : currentTetromino) {
+      //    block.setColor(black);
+      //  }
+      //  updateGrid(currentTetromino);
+      //  rotatedtetrominoL();
+      //  startY += 25;
+        
+      //}
+      //rotated = false; idk how to make the next tetromino stay the same 
       }
     }
     if (randomNum == 4) {
       if (fall == true) {
+        for (TetrisBlock block : currentTetromino) {
+          block.setColor(black);
+        }
+        updateGrid(currentTetromino);
         tetrominoO();
-        black("tetrominoO");
         startY += 25;
       }
     }
     if (randomNum == 5) {
       if (fall == true) {
+        for (TetrisBlock block : currentTetromino) {
+          block.setColor(black);
+        }
+        updateGrid(currentTetromino);
         tetrominoS();
-        black("tetrominoS");
         startY += 25;
       }
     }
     if (randomNum == 6) {
       if (fall == true) {
+        for (TetrisBlock block : currentTetromino) {
+          block.setColor(black);
+        }
+        updateGrid(currentTetromino);
         tetrominoT();
-        black("tetrominoT");
         startY += 25;
       }
     }
     if (randomNum == 7) {
       if (fall == true) {
+        for (TetrisBlock block : currentTetromino) {
+          block.setColor(black);
+        }
+        updateGrid(currentTetromino);
         tetrominoZ();
-        black("tetrominoZ");
+        startY += 25;
+      }
+    }
+    // add a higher chance of getting the easier blocks (so the player can level up more)
+    if (randomNum == 8) {
+      if (fall == true) {
+        for (TetrisBlock block : currentTetromino) {
+          block.setColor(black);
+        }
+        updateGrid(currentTetromino);
+        tetrominoI();
+        startY += 25;
+      }
+    }
+    if (randomNum == 9) {
+      if (fall == true) {
+        for (TetrisBlock block : currentTetromino) {
+          block.setColor(black);
+        }
+        updateGrid(currentTetromino);
+        tetrominoO();
         startY += 25;
       }
     }
     clearRow();
     if (fall == false) {
     // restarts, makes new tetromino
-    randomNum = (int) (Math.random()*7)+1;
+    randomNum = 3;//(int) (Math.random()*9)+1;
+    //randomNum = 4;
     newTetromino = true;
     currentTetromino = new ArrayList<TetrisBlock>();
     startX = 150;
@@ -138,8 +196,8 @@ void gameLost() {
   newTetromino = false;
   print("There is no more room to place the tetrominos, you have lost the game!");
   textSize(20);
-  //textFont(f);
-  fill(0, 408, 612, 816);
+  textFont(font);
+  fill(255, 408, 612, 816);
   text("No more room to place", 50, 300, -120);
   text("the tetrominos, you lose!", 50, 320, -120);
   text("Your final score is " + score, 50, 360, -120);
@@ -153,7 +211,7 @@ boolean checkTopBottom(TetrisBlock block) {
   int gridX = block.getX() / 25; // checks the block of the grid that it's at
   int gridY = block.getY() / 25;
   // if block touches top, call gameLost()
-  if (gridY<=0 || (grid[gridX][gridY-1].getColor() != black && !currentTetromino.contains(grid[gridX][gridY - 1]))) {
+  if ((gridY<=0) || (grid[gridX][gridY-1].getColor() != black && !currentTetromino.contains(grid[gridX][gridY - 1]))) {
     gameLost();
     return true;
   }
@@ -186,9 +244,9 @@ boolean checkLeft(TetrisBlock block) { //checks to see if the block can move to 
 }
 
 boolean checkRight(TetrisBlock block) {
-  int gridX = block.getX()/25+7; //x value of the block to its right 
+  int gridX = block.getX()/25+1; //x value of the block to its right 
   int gridY = block.getY()/25;
-  if(gridX >= grid.length){
+  if(gridX >= grid.length-6.75){
     return true; 
   }
   if (grid[gridX][gridY].getColor() != black && !currentTetromino.contains(grid[gridX][gridY])) {
@@ -200,19 +258,20 @@ boolean checkRight(TetrisBlock block) {
 void keyPressed() {
   boolean canMoveLeft = true;
   boolean canMoveRight = true;
-  // only moves left or right if there's nothing touching on the left or right
+  
   if (keyCode == LEFT) {
     for (TetrisBlock block : currentTetromino) {
-      if (checkLeft(block)) { //if it is true that the block cannot be moved, then canMoveLeft is false and the loop would break
+      if (checkLeft(block)) {
         canMoveLeft = false;
         break;
       }
     }
-    if (canMoveLeft) { //if canMoveleft is true then it would set the xvalues of the tetromino blocks to the left 
+    if (canMoveLeft) {
+      frameRate(10);
       for(TetrisBlock block : currentTetromino){
-        block.setX(block.getX()-25);
+        block.setX(block.getX() - 25);
       }
-    startX -=25; 
+      startX -= 25;
     }
   } else if (keyCode == RIGHT) {
     for (TetrisBlock block : currentTetromino) {
@@ -221,15 +280,21 @@ void keyPressed() {
         break;
       }
     }
-    if (canMoveRight) { //if canMoveRight is true then it would set the xvalues of the tetromino blocks to the right 
-        for(TetrisBlock block : currentTetromino){
-        block.setX(block.getX()+25);
+    if (canMoveRight) {
+      frameRate(10);
+      for(TetrisBlock block : currentTetromino){
+        block.setX(block.getX() + 25);
       }
-    startX +=25;
+      startX += 25;
     }
+  } else if (keyCode == DOWN) {
+    frameRate(10);
+  } else if (keyCode == UP) {
+   // rotated = true; 
+    println("UP arrow key pressed");  // Debug print for UP arrow key
+    //rotatedtetrominoL();
   }
 }
-
 
 
 void tetrominoI() {
@@ -295,6 +360,29 @@ void tetrominoL() {
     fall = true;
   }
 }
+
+//void rotatedtetrominoL() {
+//  TetrisBlock one = new TetrisBlock(startX+25, startY, orange);
+//  TetrisBlock two = new TetrisBlock(startX+25, startY + 25, orange);
+//  TetrisBlock three = new TetrisBlock(startX, startY + 25, orange);
+//  TetrisBlock four = new TetrisBlock(startX -25, startY+25 , orange);
+//  one.draw();
+//  two.draw();
+//  three.draw();
+//  four.draw();
+//  currentTetromino.add(one);
+//  currentTetromino.add(two);
+//  currentTetromino.add(three);
+//  currentTetromino.add(four);
+//  if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
+//    fall = false;
+//    updateGrid(currentTetromino);
+//  } else {
+//    fall = true;
+//  }
+//}
+
+
 
 void tetrominoO(){
   TetrisBlock one = new TetrisBlock(startX, startY, yellow);
@@ -378,81 +466,9 @@ void tetrominoZ(){
     fall = true;
   }
 }
-//Makes a black tetromino that follows the colored one while falling
-//This makes it so that the colored tetromino falling isn't just one vertical line
-void black(String tet){
-    if (tet.equals("tetrominoI")){
-      TetrisBlock one = new TetrisBlock(startX, startY-100, black);
-      TetrisBlock two = new TetrisBlock(startX, startY-75, black);
-      TetrisBlock three = new TetrisBlock(startX, startY-50,black);
-      TetrisBlock four = new TetrisBlock(startX, startY-25, black);
-      one.draw();
-      two.draw();
-      three.draw();
-      four.draw();
-    }
-    if (tet.equals("tetrominoJ")){
-      TetrisBlock one = new TetrisBlock(startX, startY-75,  black);
-      TetrisBlock two = new TetrisBlock(startX, startY-50,  black);
-      TetrisBlock three = new TetrisBlock(startX, startY-25, black);
-      TetrisBlock four = new TetrisBlock(startX-25, startY+25,  black);
-      one.draw();
-      two.draw();
-      three.draw();
-      four.draw();
-    }
-    if (tet.equals("tetrominoL")){
-      TetrisBlock one = new TetrisBlock(startX, startY-75,  black);
-      TetrisBlock two = new TetrisBlock(startX, startY-50,  black);
-      TetrisBlock three = new TetrisBlock(startX, startY-25,  black);
-      TetrisBlock four = new TetrisBlock(startX+25, startY+25,  black);
-      one.draw();
-      two.draw();
-      three.draw();
-      four.draw();
-    }
-    if (tet.equals("tetrominoO")){ 
-      TetrisBlock one = new TetrisBlock(startX, startY-50,  black);
-      TetrisBlock two = new TetrisBlock(startX+25, startY-50,  black);
-      TetrisBlock three = new TetrisBlock(startX, startY-25,  black);
-      TetrisBlock four = new TetrisBlock(startX+25, startY-25,  black);
-      one.draw();
-      two.draw();
-      three.draw();
-      four.draw();
-    }
-    if (tet.equals("tetrominoS")){ 
-      TetrisBlock one = new TetrisBlock(startX, startY-25,  black);
-      TetrisBlock two = new TetrisBlock(startX+25, startY-25,  black);
-      TetrisBlock three = new TetrisBlock(startX-25, startY-25,  black);
-      TetrisBlock four = new TetrisBlock(startX-25, startY,  black);
-      one.draw();
-      two.draw();
-      three.draw();
-      four.draw();
-    }
-    if (tet.equals("tetrominoT")){ 
-      TetrisBlock one = new TetrisBlock(startX, startY-25, black);
-      TetrisBlock two = new TetrisBlock(startX+25, startY-25, black);
-      TetrisBlock three = new TetrisBlock(startX-25, startY-25, black);
-      one.draw();
-      two.draw();
-      three.draw();
-    }
-    if (tet.equals("tetrominoZ")){
-      TetrisBlock one = new TetrisBlock(startX, startY-25,  black);
-      TetrisBlock two = new TetrisBlock(startX-25, startY-25,  black);
-      TetrisBlock three = new TetrisBlock(startX+25, startY-25,  black);
-      TetrisBlock four = new TetrisBlock(startX+25, startY,  black);
-      one.draw();
-      two.draw();
-      three.draw();
-      four.draw();
-    }
-}
 
 void clearRow(){
-   int gridW = width / 25; // 1 block is 25x25
+   double gridW = width / 25-6; // 1 block is 25x25
    int gridH = height / 25;
    int y = 0;
   
@@ -479,12 +495,10 @@ void clearRow(){
      }
    }
     score += 100; 
-      if(score >= 500){
-        level += score/500; //if the score is above 500, the level would increase by how much 500s is in the score 
+      if(score >= 300){
+        level += score/300; //if the score is above 500, the level would increase by how much 500s is in the score 
    }
    }
       y++;
 }
 }
-
-  
