@@ -6,7 +6,6 @@ int score = 0; //start off with zero as a score
 int level = 1;
 boolean fall = true;
 boolean newTetromino = true;
-//int randomNum = 4;
 int randomNum = (int)(Math.random()*7)+1;
 ArrayList<TetrisBlock> currentTetromino = new ArrayList<TetrisBlock>();
 int currentFramerate = 5; 
@@ -26,7 +25,7 @@ void setup(){
   font = createFont("tetris-2-bombliss-credits-font.ttf", 20);
   noSmooth();
   frameRate(currentFramerate * level); // when we do levels, make sure to update currentFramerate pls
-  size(500, 600);
+  size(400, 600);
   background(0);
   int gridW = width / 25; // 1 block is 25x25
   int gridH = height / 25;
@@ -44,6 +43,7 @@ void setup(){
 void draw() {
   frameRate(currentFramerate);
   background(225);
+  
   int gridW = width / 25;
   int gridH = height / 25;
   for (int x = 0; x < gridW; x++) { 
@@ -51,6 +51,7 @@ void draw() {
       grid[x][y].draw();
     }
   }
+  
   //Draws the sidebar for the points and level display
   fill(0);
   rect(width - 150, 0, 150, height);
@@ -67,51 +68,73 @@ void draw() {
       if (fall == false) {
         newTetromino = false;
         startY = 0;
-      } else { // fall = true    
+      } 
+      else { // fall = true  
+        for (TetrisBlock block : currentTetromino) {
+          block.setColor(black);
+        }
+        updateGrid(currentTetromino);
         tetrominoI();
-        black("tetrominoI");
         startY += 25;
       }
     }
     if (randomNum == 2) {
       if (fall == true) {
+        for (TetrisBlock block : currentTetromino) {
+          block.setColor(black);
+        }
+        updateGrid(currentTetromino);
         tetrominoJ();
-        black("tetrominoJ");
         startY += 25;
       }
     }
     if (randomNum == 3) {
       if (fall == true) {
+        for (TetrisBlock block : currentTetromino) {
+          block.setColor(black);
+        }
+        updateGrid(currentTetromino);
         tetrominoL();
-        black("tetrominoL");
         startY += 25;
       }
     }
     if (randomNum == 4) {
       if (fall == true) {
+        for (TetrisBlock block : currentTetromino) {
+          block.setColor(black);
+        }
+        updateGrid(currentTetromino);
         tetrominoO();
-        black("tetrominoO");
         startY += 25;
       }
     }
     if (randomNum == 5) {
       if (fall == true) {
+        for (TetrisBlock block : currentTetromino) {
+          block.setColor(black);
+        }
+        updateGrid(currentTetromino);
         tetrominoS();
-        black("tetrominoS");
         startY += 25;
       }
     }
     if (randomNum == 6) {
       if (fall == true) {
+        for (TetrisBlock block : currentTetromino) {
+          block.setColor(black);
+        }
+        updateGrid(currentTetromino);
         tetrominoT();
-        black("tetrominoT");
         startY += 25;
       }
     }
     if (randomNum == 7) {
       if (fall == true) {
+        for (TetrisBlock block : currentTetromino) {
+          block.setColor(black);
+        }
+        updateGrid(currentTetromino);
         tetrominoZ();
-        black("tetrominoZ");
         startY += 25;
       }
     }
@@ -156,7 +179,7 @@ boolean checkTopBottom(TetrisBlock block) {
   int gridX = block.getX() / 25; // checks the block of the grid that it's at
   int gridY = block.getY() / 25;
   // if block touches top, call gameLost()
-  if (gridY<=0 || (grid[gridX][gridY-1].getColor() != black && !currentTetromino.contains(grid[gridX][gridY - 1]))) {
+  if (gridY<=0){//|| (grid[gridX][gridY-1].getColor() != black && !currentTetromino.contains(grid[gridX][gridY - 1]))) {
     gameLost();
     return true;
   }
@@ -203,19 +226,19 @@ boolean checkRight(TetrisBlock block) {
 void keyPressed() {
   boolean canMoveLeft = true;
   boolean canMoveRight = true;
-  // only moves left or right if there's nothing touching on the left or right
+  
   if (keyCode == LEFT) {
     for (TetrisBlock block : currentTetromino) {
-      if (checkLeft(block)) { //if it is true that the block cannot be moved, then canMoveLeft is false and the loop would break
+      if (checkLeft(block)) {
         canMoveLeft = false;
         break;
       }
     }
-    if (canMoveLeft) { //if canMoveleft is true then it would set the xvalues of the tetromino blocks to the left 
+    if (canMoveLeft) {
       for(TetrisBlock block : currentTetromino){
-        block.setX(block.getX()-25);
+        block.setX(block.getX() - 25);
       }
-    startX -=25; 
+      startX -= 25;
     }
   } else if (keyCode == RIGHT) {
     for (TetrisBlock block : currentTetromino) {
@@ -224,18 +247,18 @@ void keyPressed() {
         break;
       }
     }
-    if (canMoveRight) { //if canMoveRight is true then it would set the xvalues of the tetromino blocks to the right 
-        for(TetrisBlock block : currentTetromino){
-        block.setX(block.getX()+25);
+    if (canMoveRight) {
+      for(TetrisBlock block : currentTetromino){
+        block.setX(block.getX() + 25);
       }
-    startX +=25;
+      startX += 25;
     }
-  }
-  else if (keyCode == DOWN){
+  } else if (keyCode == DOWN) {
     frameRate(10);
+  } else if (keyCode == UP) {
+    println("UP arrow key pressed");  // Debug print for UP arrow key
   }
 }
-
 
 
 void tetrominoI() {
@@ -384,78 +407,6 @@ void tetrominoZ(){
     fall = true;
   }
 }
-//Makes a black tetromino that follows the colored one while falling
-//This makes it so that the colored tetromino falling isn't just one vertical line
-void black(String tet){
-    if (tet.equals("tetrominoI")){
-      TetrisBlock one = new TetrisBlock(startX, startY-100, black);
-      TetrisBlock two = new TetrisBlock(startX, startY-75, black);
-      TetrisBlock three = new TetrisBlock(startX, startY-50,black);
-      TetrisBlock four = new TetrisBlock(startX, startY-25, black);
-      one.draw();
-      two.draw();
-      three.draw();
-      four.draw();
-    }
-    if (tet.equals("tetrominoJ")){
-      TetrisBlock one = new TetrisBlock(startX, startY-75,  black);
-      TetrisBlock two = new TetrisBlock(startX, startY-50,  black);
-      TetrisBlock three = new TetrisBlock(startX, startY-25, black);
-      TetrisBlock four = new TetrisBlock(startX-25, startY+25,  black);
-      one.draw();
-      two.draw();
-      three.draw();
-      four.draw();
-    }
-    if (tet.equals("tetrominoL")){
-      TetrisBlock one = new TetrisBlock(startX, startY-75,  black);
-      TetrisBlock two = new TetrisBlock(startX, startY-50,  black);
-      TetrisBlock three = new TetrisBlock(startX, startY-25,  black);
-      TetrisBlock four = new TetrisBlock(startX+25, startY+25,  black);
-      one.draw();
-      two.draw();
-      three.draw();
-      four.draw();
-    }
-    if (tet.equals("tetrominoO")){ 
-      TetrisBlock one = new TetrisBlock(startX, startY-50,  black);
-      TetrisBlock two = new TetrisBlock(startX+25, startY-50,  black);
-      TetrisBlock three = new TetrisBlock(startX, startY-25,  black);
-      TetrisBlock four = new TetrisBlock(startX+25, startY-25,  black);
-      one.draw();
-      two.draw();
-      three.draw();
-      four.draw();
-    }
-    if (tet.equals("tetrominoS")){ 
-      TetrisBlock one = new TetrisBlock(startX, startY-25,  black);
-      TetrisBlock two = new TetrisBlock(startX+25, startY-25,  black);
-      TetrisBlock three = new TetrisBlock(startX-25, startY-25,  black);
-      TetrisBlock four = new TetrisBlock(startX-25, startY,  black);
-      one.draw();
-      two.draw();
-      three.draw();
-      four.draw();
-    }
-    if (tet.equals("tetrominoT")){ 
-      TetrisBlock one = new TetrisBlock(startX, startY-25, black);
-      TetrisBlock two = new TetrisBlock(startX+25, startY-25, black);
-      TetrisBlock three = new TetrisBlock(startX-25, startY-25, black);
-      one.draw();
-      two.draw();
-      three.draw();
-    }
-    if (tet.equals("tetrominoZ")){
-      TetrisBlock one = new TetrisBlock(startX, startY-25,  black);
-      TetrisBlock two = new TetrisBlock(startX-25, startY-25,  black);
-      TetrisBlock three = new TetrisBlock(startX+25, startY-25,  black);
-      TetrisBlock four = new TetrisBlock(startX+25, startY,  black);
-      one.draw();
-      two.draw();
-      three.draw();
-      four.draw();
-    }
-}
 
 void clearRow(){
    double gridW = width / 25-6; // 1 block is 25x25
@@ -492,5 +443,3 @@ void clearRow(){
       y++;
 }
 }
-
-  
