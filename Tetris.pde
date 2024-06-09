@@ -436,10 +436,11 @@ void clearRow(){
      }
    }
     score += 100; 
-      if(score >= 500){
-        level += score/500; //if the score is above 500, the level would increase by how much 500s is in the score 
+      if(score >= 300){
+        level += score/300; //if the score is above 500, the level would increase by how much 500s is in the score 
    }
    }
       y++;
 }
 }
+
