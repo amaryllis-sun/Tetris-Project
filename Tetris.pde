@@ -6,11 +6,13 @@ int score = 0; //start off with zero as a score
 int level = 1;
 boolean fall = true;
 boolean newTetromino = true;
-int randomNum = 3;//(int)(Math.random()*7)+1;
+//int randomNum = 3;//(int)(Math.random()*7)+1;
+int randomNum = (int)(Math.random()*7) + 1;
 int next = (int)(Math.random()*7)+1;
 ArrayList<TetrisBlock> currentTetromino = new ArrayList<TetrisBlock>();
-int currentSpeed = 2;
-//boolean rotated; 
+int currentSpeed = 5;
+
+//booleans for upcoming block display
 boolean tetroI = false;
 boolean tetroJ = false;
 boolean tetroO = false;
@@ -51,6 +53,9 @@ void draw() {
   background(225);
   frameRate(currentSpeed);
   
+  int xVal = width - 130;
+  int yVal = 180;
+  
   int gridW = width / 25;
   int gridH = height / 25;
   for (int x = 0; x < gridW; x++) { 
@@ -71,7 +76,8 @@ void draw() {
   text("Upcoming \nBlock:", width - 130, 150);
  
   if (newTetromino) {
-    randomNum = next;
+    System.out.println("RandomNum: " + randomNum);
+    System.out.println("Next: " + next);
     currentTetromino = new ArrayList<TetrisBlock>();
     if (randomNum == 1) {
       if (fall == false) {
@@ -99,24 +105,12 @@ void draw() {
     }
     if (randomNum == 3) {
       if (fall == true) {
-        //if(rotated == false){
         for (TetrisBlock block : currentTetromino) {
           block.setColor(black);
         }
         updateGrid(currentTetromino);
         tetrominoL();
         startY += 25;
-    //  }
-      //else{
-      //  for (TetrisBlock block : currentTetromino) {
-      //    block.setColor(black);
-      //  }
-      //  updateGrid(currentTetromino);
-      //  rotatedtetrominoL();
-      //  startY += 25;
-        
-      //}
-      //rotated = false; idk how to make the next tetromino stay the same 
       }
     }
     if (randomNum == 4) {
@@ -159,45 +153,21 @@ void draw() {
         startY += 25;
       }
     }
-    // add a higher chance of getting the easier blocks (so the player can level up more)
-    if (randomNum == 8) {
-      if (fall == true) {
-        for (TetrisBlock block : currentTetromino) {
-          block.setColor(black);
-        }
-        updateGrid(currentTetromino);
-        tetrominoI();
-        startY += 25;
-      }
-    }
-    if (randomNum == 9) {
-      if (fall == true) {
-        for (TetrisBlock block : currentTetromino) {
-          block.setColor(black);
-        }
-        updateGrid(currentTetromino);
-        tetrominoO();
-
-        startY += 25;
-      }
-    }
     clearRow();
     if (fall == false) {
     // restarts, makes new tetromino
-    randomNum = 3;//(int) (Math.random()*9)+1;
-    randomNum = (int) (Math.random()*7)+1;
     
     //Makes it so that we know the next block picked ahead of time
     //Currently doesn't work though...
-    
-    next = (int)(Math.random()*9)+1;
-    if (next == 1 || next == 8) {
+    randomNum = next;
+    next = (int)(Math.random()*7)+1;
+    if (next == 1) {
       tetroI = true;
     } else if (next == 2) {
       tetroJ = true;
     } else if (next == 3) {
       tetroL = true;
-    } else if (next == 4 || next == 9) {
+    } else if (next == 4) {
       tetroO = true;
     } else if (next == 5) {
       tetroS = true;
@@ -206,30 +176,12 @@ void draw() {
     } else if (next == 7) {
       tetroZ = true;
     }  
-    newTetromino = true;
-    currentTetromino = new ArrayList<TetrisBlock>();
-    startX = 150;
-    startY = 25;
-    // picks random tetromino
-    fall = true;
-    }
-  }
-   clearRow();
-  if (newTetromino == false){
-    noLoop();
-  }
-}
-
-//Draws the tetromino that will fall next in the designated sidebar spot
-void drawNext() {
-  int xVal = width - 130;
-  int yVal = 180;
-  if (tetroI == true) {
+    if (tetroI == true) {
     fill(blue);
-    square(xVal, yVal, 30);
-    square(xVal, yVal + 25, 30);
-    square(xVal, yVal + 50, 30);
-    square(xVal, yVal + 75, 30);
+    square(width - 130, yVal, 30);
+    square(width - 130, yVal + 25, 30);
+    square(width - 130, yVal + 50, 30);
+    square(width - 130, yVal + 75, 30);
   } else if (tetroJ == true) {
     fill(pink);
     square(xVal, yVal, 30);
@@ -238,6 +190,7 @@ void drawNext() {
     square(xVal - 25, yVal + 50, 30);
   } else if (tetroL == true) {
     fill(orange);
+    print("TETRO L TRUE");
     square(xVal, yVal, 30);
     square(xVal, yVal + 25, 30);
     square(xVal, yVal + 50, 30);
@@ -267,7 +220,70 @@ void drawNext() {
     square(startX, yVal+25, green);
     square(startX+25, yVal+25, green);
   }
+    newTetromino = true;
+    currentTetromino = new ArrayList<TetrisBlock>();
+    startX = 150;
+    startY = 25;
+    // picks random tetromino
+    fall = true;
+    }
+  }
+   clearRow();
+  if (newTetromino == false){
+    noLoop();
+  }
 }
+
+//Draws the tetromino that will fall next in the designated sidebar spot
+//void drawNext() {
+
+//  if (tetroI == true) {
+//    print("TETRO I TRUE");
+//    fill(blue);
+//    square(xVal, yVal, 30);
+//    square(xVal, yVal + 25, 30);
+//    square(xVal, yVal + 50, 30);
+//    square(xVal, yVal + 75, 30);
+//  } else if (tetroJ == true) {
+//    fill(pink);
+//    print("TETRO J TRUE");
+//    square(xVal, yVal, 30);
+//    square(xVal, yVal + 25, 30);
+//    square(xVal, yVal + 50, 30);
+//    square(xVal - 25, yVal + 50, 30);
+//  } else if (tetroL == true) {
+//    fill(orange);
+//    print("TETRO L TRUE");
+//    square(xVal, yVal, 30);
+//    square(xVal, yVal + 25, 30);
+//    square(xVal, yVal + 50, 30);
+//    square(xVal + 25, yVal + 50, 30);
+//  } else if (tetroO == true) {
+//    fill(yellow);
+//    square(xVal, yVal, 30);
+//    square(xVal+25, yVal, 30);
+//    square(xVal, yVal+25, 30);
+//    square(xVal+25, yVal+25, 30);
+//  } else if (tetroS == true) {
+//    fill(red);
+//    square(xVal, yVal, 30);
+//    square(xVal+25, yVal, 30);
+//    square(xVal, yVal+25, 30);
+//    square(xVal-25, yVal+25, 30);
+//  } else if (tetroT == true) {
+//    fill(purple);
+//    square(xVal, yVal, 30);
+//    square(xVal+25, yVal, 30);
+//    square(xVal-25, yVal, 30);
+//    square(xVal, yVal+25, 30);
+//  } else if (tetroZ == true) {
+//    fill(green);
+//    square(startX, yVal, green);
+//    square(startX-25, yVal, green);
+//    square(startX, yVal+25, green);
+//    square(startX+25, yVal+25, green);
+//  }
+//}
     
 //Is called if a tetromino has exceeded the height of the screen/grid
 void gameLost() {
@@ -369,11 +385,6 @@ void keyPressed() {
     }
   } else if (keyCode == DOWN) {
     frameRate(10);
-  } else if (keyCode == UP) {
-   // rotated = true; 
-    println("UP arrow key pressed");  // Debug print for UP arrow key
-    //rotatedtetrominoL();
-    println("UP arrow key pressed");  // Debug print for UP arrow key
   }
 }
 
