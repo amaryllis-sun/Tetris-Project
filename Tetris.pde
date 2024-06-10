@@ -7,10 +7,17 @@ int level = 1;
 boolean fall = true;
 boolean newTetromino = true;
 int randomNum = 3;//(int)(Math.random()*7)+1;
+int next = (int)(Math.random()*7)+1;
 ArrayList<TetrisBlock> currentTetromino = new ArrayList<TetrisBlock>();
 int currentSpeed = 2;
 //boolean rotated; 
-
+boolean tetroI = false;
+boolean tetroJ = false;
+boolean tetroO = false;
+boolean tetroL = false;
+boolean tetroS = false;
+boolean tetroZ = false;
+boolean tetroT = false;
 
 // colors
 color blue= color(6, 225, 255);
@@ -58,12 +65,13 @@ void draw() {
   fill(255);
   textAlign(LEFT);
   textSize(20);
-  //textFont(font);
-  textFont(font);
+  //textFont(font); is creating a null error for some reason?
   text("Level: " + level, width - 130, 50);
   text("Points: " + score, width - 130, 100);
+  text("Upcoming \nBlock", width - 130, 150);
  
   if (newTetromino) {
+    //randomNum = next;
     currentTetromino = new ArrayList<TetrisBlock>();
     if (randomNum == 1) {
       if (fall == false) {
@@ -178,7 +186,11 @@ void draw() {
     // restarts, makes new tetromino
     randomNum = 3;//(int) (Math.random()*9)+1;
     randomNum = (int) (Math.random()*7)+1;
-    //randomNum = 4;
+    
+    //Makes it so that we know the next block picked ahead of time
+    //Currently doesn't work though...
+    //next = (int) (Math.random()*9)+1;
+    
     newTetromino = true;
     currentTetromino = new ArrayList<TetrisBlock>();
     startX = 150;
@@ -192,6 +204,55 @@ void draw() {
     noLoop();
   }
 }
+
+//Draws the tetromino that will fall next in the designated sidebar spot
+void drawNext() {
+  int xVal = width - 130;
+  int yVal = 180;
+  if (tetroI == true) {
+    fill(blue);
+    square(xVal, yVal, 30);
+    square(xVal, yVal + 25, 30);
+    square(xVal, yVal + 50, 30);
+    square(xVal, yVal + 75, 30);
+  } else if (tetroJ == true) {
+    fill(pink);
+    square(xVal, yVal, 30);
+    square(xVal, yVal + 25, 30);
+    square(xVal, yVal + 50, 30);
+    square(xVal - 25, yVal + 50, 30);
+  } else if (tetroL == true) {
+    fill(orange);
+    square(xVal, yVal, 30);
+    square(xVal, yVal + 25, 30);
+    square(xVal, yVal + 50, 30);
+    square(xVal + 25, yVal + 50, 30);
+  } else if (tetroO == true) {
+    fill(yellow);
+    square(xVal, yVal, 30);
+    square(xVal+25, yVal, 30);
+    square(xVal, yVal+25, yellow);
+    square(xVal+25, yVal+25, yellow);
+  } else if (tetroS == true) {
+    fill(red);
+    square(xVal, yVal, red);
+    square(xVal+25, yVal, red);
+    square(xVal, yVal+25, red);
+    square(xVal-25, yVal+25, red);
+  } else if (tetroT == true) {
+    fill(purple);
+    square(xVal, startY, purple);
+    square(xVal+25, startY, purple);
+    square(xVal-25, startY, purple);
+    square(xVal, startY+25, purple);
+  } else if (tetroZ == true) {
+    square(startX, startY, green);
+    square(startX-25, startY, green);
+    square(startX, startY+25, green);
+    square(startX+25, startY+25, green);
+  }
+}
+    
 
 //Is called if a tetromino has exceeded the height of the screen/grid
 void gameLost() {
@@ -318,6 +379,7 @@ void tetrominoI() {
 
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
+    tetroI = false;
     updateGrid(currentTetromino);
   } else {
     fall = true;
@@ -339,6 +401,7 @@ void tetrominoJ() {
   currentTetromino.add(four);
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
+    tetroJ = false;
     updateGrid(currentTetromino);
   } else {
     fall = true;
@@ -360,6 +423,7 @@ void tetrominoL() {
   currentTetromino.add(four);
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
+    tetroL = false;
     updateGrid(currentTetromino);
   } else {
     fall = true;
@@ -404,6 +468,7 @@ void tetrominoO(){
   currentTetromino.add(four);
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
+    tetroO = false;
     updateGrid(currentTetromino);
   } else {
     fall = true;
@@ -425,6 +490,7 @@ void tetrominoS(){
   currentTetromino.add(four);
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
+    tetroS = false;
     updateGrid(currentTetromino);
   } else {
     fall = true;
@@ -446,6 +512,7 @@ void tetrominoT(){
   currentTetromino.add(four);
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
+    tetroT = false;
     updateGrid(currentTetromino);
   } else {
     fall = true;
@@ -466,6 +533,7 @@ void tetrominoZ(){
   currentTetromino.add(four);
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
+    tetroZ = false;
     updateGrid(currentTetromino);
   } else {
     fall = true;
@@ -507,4 +575,3 @@ void clearRow(){
       y++;
 }
 }
-
