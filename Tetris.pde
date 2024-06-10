@@ -68,10 +68,10 @@ void draw() {
   //textFont(font); is creating a null error for some reason?
   text("Level: " + level, width - 130, 50);
   text("Points: " + score, width - 130, 100);
-  text("Upcoming \nBlock", width - 130, 150);
+  text("Upcoming \nBlock:", width - 130, 150);
  
   if (newTetromino) {
-    //randomNum = next;
+    randomNum = next;
     currentTetromino = new ArrayList<TetrisBlock>();
     if (randomNum == 1) {
       if (fall == false) {
@@ -189,8 +189,23 @@ void draw() {
     
     //Makes it so that we know the next block picked ahead of time
     //Currently doesn't work though...
-    //next = (int) (Math.random()*9)+1;
     
+    next = (int)(Math.random()*9)+1;
+    if (next == 1 || next == 8) {
+      tetroI = true;
+    } else if (next == 2) {
+      tetroJ = true;
+    } else if (next == 3) {
+      tetroL = true;
+    } else if (next == 4 || next == 9) {
+      tetroO = true;
+    } else if (next == 5) {
+      tetroS = true;
+    } else if (next == 6) {
+      tetroT = true;
+    } else if (next == 7) {
+      tetroZ = true;
+    }  
     newTetromino = true;
     currentTetromino = new ArrayList<TetrisBlock>();
     startX = 150;
@@ -231,29 +246,29 @@ void drawNext() {
     fill(yellow);
     square(xVal, yVal, 30);
     square(xVal+25, yVal, 30);
-    square(xVal, yVal+25, yellow);
-    square(xVal+25, yVal+25, yellow);
+    square(xVal, yVal+25, 30);
+    square(xVal+25, yVal+25, 30);
   } else if (tetroS == true) {
     fill(red);
-    square(xVal, yVal, red);
-    square(xVal+25, yVal, red);
-    square(xVal, yVal+25, red);
-    square(xVal-25, yVal+25, red);
+    square(xVal, yVal, 30);
+    square(xVal+25, yVal, 30);
+    square(xVal, yVal+25, 30);
+    square(xVal-25, yVal+25, 30);
   } else if (tetroT == true) {
     fill(purple);
-    square(xVal, startY, purple);
-    square(xVal+25, startY, purple);
-    square(xVal-25, startY, purple);
-    square(xVal, startY+25, purple);
+    square(xVal, yVal, 30);
+    square(xVal+25, yVal, 30);
+    square(xVal-25, yVal, 30);
+    square(xVal, yVal+25, 30);
   } else if (tetroZ == true) {
-    square(startX, startY, green);
-    square(startX-25, startY, green);
-    square(startX, startY+25, green);
-    square(startX+25, startY+25, green);
+    fill(green);
+    square(startX, yVal, green);
+    square(startX-25, yVal, green);
+    square(startX, yVal+25, green);
+    square(startX+25, yVal+25, green);
   }
 }
     
-
 //Is called if a tetromino has exceeded the height of the screen/grid
 void gameLost() {
   fill(0);
