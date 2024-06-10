@@ -52,8 +52,7 @@ void setup(){
 void draw() {
   background(225);
   frameRate(currentSpeed);
-  
-  int xVal = width - 130;
+
   int yVal = 180;
   
   int gridW = width / 25;
@@ -78,45 +77,45 @@ void draw() {
   if (tetroI == true) {
     fill(blue);
     square(width - 130, yVal, 30);
-    square(width - 130, yVal + 25, 30);
-    square(width - 130, yVal + 50, 30);
-    square(width - 130, yVal + 75, 30);
+    square(width - 130, yVal + 30, 30);
+    square(width - 130, yVal + 60, 30);
+    square(width - 130, yVal + 90, 30);
   } else if (tetroJ == true) {
     fill(pink);
-    square(width - 130+20, yVal, 30);
-    square(width - 130+20, yVal + 25, 30);
-    square(width - 130+20, yVal + 50, 30);
-    square(width - 130-5, yVal + 50, 30);
+    square(width - 130+30, yVal, 30);
+    square(width - 130+30, yVal + 30, 30);
+    square(width - 130+30, yVal + 60, 30);
+    square(width - 130, yVal + 60, 30);
   } else if (tetroL == true) {
     fill(orange);
     square(width - 130, yVal, 30);
-    square(width - 130, yVal + 25, 30);
-    square(width - 130, yVal + 50, 30);
-    square(width - 130+25, yVal + 50, 30);
+    square(width - 130, yVal + 30, 30);
+    square(width - 130, yVal + 60, 30);
+    square(width - 130+30, yVal + 60, 30);
   } else if (tetroO == true) {
     fill(yellow);
     square(width - 130, yVal, 30);
-    square(width - 130+25, yVal, 30);
-    square(width - 130, yVal+25, 30);
-    square(width - 130+25, yVal+25, 30);
+    square(width - 130+30, yVal, 30);
+    square(width - 130, yVal+30, 30);
+    square(width - 130+30, yVal+30, 30);
   } else if (tetroS == true) {
     fill(red);
-    square(width - 130+20, yVal, 30);
-    square(width - 130+45, yVal, 30);
-    square(width - 130, yVal+25, 30);
-    square(width - 130+10, yVal+25, 30);
+    square(width - 130+40, yVal, 30);
+    square(width - 130+70, yVal, 30);
+    square(width - 130, yVal+30, 30);
+    square(width - 130+40, yVal+30, 30);
   } else if (tetroT == true) {
     fill(purple);
-    square(xVal, yVal, 30);
-    square(xVal+25, yVal, 30);
-    square(xVal-25, yVal, 30);
-    square(xVal, yVal+25, 30);
+    square(width - 130, yVal, 30);
+    square(width - 130+30, yVal, 30);
+    square(width - 130+60, yVal, 30);
+    square(width - 130+30, yVal+30, 30);
   } else if (tetroZ == true) {
     fill(green);
-    square(startX, yVal, green);
-    square(startX-25, yVal, green);
-    square(startX, yVal+25, green);
-    square(startX+25, yVal+25, green);
+    square(width - 130, yVal, 30);
+    square(width - 130-30, yVal, 30);
+    square(width - 130, yVal+30, 30);
+    square(width - 130+30, yVal+30, 30);
   }
  
   if (newTetromino) {
@@ -220,49 +219,6 @@ void draw() {
     } else if (next == 7) {
       tetroZ = true;
     }  
-  //  if (tetroI == true) {
-  //  fill(blue);
-  //  square(width - 130, yVal, 30);
-  //  square(width - 130, yVal + 25, 30);
-  //  square(width - 130, yVal + 50, 30);
-  //  square(width - 130, yVal + 75, 30);
-  //} else if (tetroJ == true) {
-  //  fill(pink);
-  //  square(xVal, yVal, 30);
-  //  square(xVal, yVal + 25, 30);
-  //  square(xVal, yVal + 50, 30);
-  //  square(xVal - 25, yVal + 50, 30);
-  //} else if (tetroL == true) {
-  //  fill(orange);
-  //  square(xVal, yVal, 30);
-  //  square(xVal, yVal + 25, 30);
-  //  square(xVal, yVal + 50, 30);
-  //  square(xVal+25, yVal + 50, 30);
-  //} else if (tetroO == true) {
-  //  fill(yellow);
-  //  square(xVal, yVal, 30);
-  //  square(xVal+25, yVal, 30);
-  //  square(xVal, yVal+25, 30);
-  //  square(xVal+25, yVal+25, 30);
-  //} else if (tetroS == true) {
-  //  fill(red);
-  //  square(xVal+20, yVal, 30);
-  //  square(xVal + 45, yVal, 30);
-  //  square(xVal, yVal+25, 30);
-  //  square(xVal-45, yVal+25, 30);
-  //} else if (tetroT == true) {
-  //  fill(purple);
-  //  square(xVal, yVal, 30);
-  //  square(xVal+25, yVal, 30);
-  //  square(xVal-25, yVal, 30);
-  //  square(xVal, yVal+25, 30);
-  //} else if (tetroZ == true) {
-  //  fill(green);
-  //  square(startX, yVal, green);
-  //  square(startX-25, yVal, green);
-  //  square(startX, yVal+25, green);
-  //  square(startX+25, yVal+25, green);
-  //}
     newTetromino = true;
     currentTetromino = new ArrayList<TetrisBlock>();
     startX = 150;
@@ -278,55 +234,6 @@ void draw() {
 }
 
 //Draws the tetromino that will fall next in the designated sidebar spot
-//void drawNext() {
-
-//  if (tetroI == true) {
-//    print("TETRO I TRUE");
-//    fill(blue);
-//    square(xVal, yVal, 30);
-//    square(xVal, yVal + 25, 30);
-//    square(xVal, yVal + 50, 30);
-//    square(xVal, yVal + 75, 30);
-//  } else if (tetroJ == true) {
-//    fill(pink);
-//    print("TETRO J TRUE");
-//    square(xVal, yVal, 30);
-//    square(xVal, yVal + 25, 30);
-//    square(xVal, yVal + 50, 30);
-//    square(xVal - 25, yVal + 50, 30);
-//  } else if (tetroL == true) {
-//    fill(orange);
-//    print("TETRO L TRUE");
-//    square(xVal, yVal, 30);
-//    square(xVal, yVal + 25, 30);
-//    square(xVal, yVal + 50, 30);
-//    square(xVal + 25, yVal + 50, 30);
-//  } else if (tetroO == true) {
-//    fill(yellow);
-//    square(xVal, yVal, 30);
-//    square(xVal+25, yVal, 30);
-//    square(xVal, yVal+25, 30);
-//    square(xVal+25, yVal+25, 30);
-//  } else if (tetroS == true) {
-//    fill(red);
-//    square(xVal, yVal, 30);
-//    square(xVal+25, yVal, 30);
-//    square(xVal, yVal+25, 30);
-//    square(xVal-25, yVal+25, 30);
-//  } else if (tetroT == true) {
-//    fill(purple);
-//    square(xVal, yVal, 30);
-//    square(xVal+25, yVal, 30);
-//    square(xVal-25, yVal, 30);
-//    square(xVal, yVal+25, 30);
-//  } else if (tetroZ == true) {
-//    fill(green);
-//    square(startX, yVal, green);
-//    square(startX-25, yVal, green);
-//    square(startX, yVal+25, green);
-//    square(startX+25, yVal+25, green);
-//  }
-//}
     
 //Is called if a tetromino has exceeded the height of the screen/grid
 void gameLost() {
