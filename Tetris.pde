@@ -45,8 +45,6 @@ void setup(){
       grid[x][y].draw();
     }
   }
-  //TetrisBlock test = new TetrisBlock(startX, 500, green);
-  //test.draw();
 }
 
 void draw() {
@@ -69,10 +67,26 @@ void draw() {
   fill(255);
   textAlign(LEFT);
   textSize(20);
-  //textFont(font); is creating a null error for some reason?
+  //textFont(font); 
   text("Level: " + level, width - 130, 50);
   text("Points: " + score, width - 130, 100);
   text("Upcoming \nBlock:", width - 130, 150);
+  
+  if (next == 1) {
+    tetroI = true;
+  } else if (next == 2) {
+    tetroJ = true;
+  } else if (next == 3) {
+    tetroL = true;
+  } else if (next == 4) {
+    tetroO = true;
+  } else if (next == 5) {
+    tetroS = true;
+  } else if (next == 6) {
+    tetroT = true;
+  } else if (next == 7) {
+    tetroZ = true;
+  }
   
   if (tetroI == true) {
     fill(blue);
@@ -111,12 +125,11 @@ void draw() {
     square(width - 130+60, yVal, 30);
     square(width - 130+30, yVal+30, 30);
   } else if (tetroZ == true) {
-    System.out.println("tetroZ should print");
-    fill(green); //doesn't always work
+    fill(green); 
+    square(width - 130+30, yVal, 30);
     square(width - 130, yVal, 30);
-    square(width - 130-30, yVal, 30);
-    square(width - 130, yVal+30, 30);
     square(width - 130+30, yVal+30, 30);
+    square(width - 130+60, yVal+30, 30);
   }
  
   if (newTetromino) {
@@ -202,30 +215,36 @@ void draw() {
     // restarts, makes new tetromino
     
     //Makes it so that we know the next block picked ahead of time
-    randomNum = next;
-    next = (int)(Math.random()*7)+1;
-    if (next == 1) {
-      tetroI = true;
-    } else if (next == 2) {
-      tetroJ = true;
-    } else if (next == 3) {
-      tetroL = true;
-    } else if (next == 4) {
-      tetroO = true;
-    } else if (next == 5) {
-      System.out.println("Should draw tetroS");
-      tetroS = true;
-    } else if (next == 6) {
-      tetroT = true;
-    } else if (next == 7) {
-      tetroZ = true;
-    }  
-    newTetromino = true;
-    currentTetromino = new ArrayList<TetrisBlock>();
-    startX = 150;
-    startY = 25;
-    // picks random tetromino
-    fall = true;
+      randomNum = next;
+      next = (int)(Math.random()*7)+1;
+      tetroI = false;
+      tetroJ = false;
+      tetroL = false;
+      tetroO = false;
+      tetroS = false;
+      tetroT = false;
+      tetroZ = false;
+      if (next == 1) {
+        tetroI = true;
+      } else if (next == 2) {
+        tetroJ = true;
+      } else if (next == 3) {
+        tetroL = true;
+      } else if (next == 4) {
+        tetroO = true;
+      } else if (next == 5) {
+        tetroS = true;
+      } else if (next == 6) {
+        tetroT = true;
+      } else if (next == 7) {
+        tetroZ = true;
+      }  
+      newTetromino = true;
+      currentTetromino = new ArrayList<TetrisBlock>();
+      startX = 150;
+      startY = 25;
+      // picks random tetromino
+      fall = true;
     }
   }
    clearRow();
