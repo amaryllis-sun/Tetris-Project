@@ -99,19 +99,20 @@ void draw() {
     square(width - 130, yVal+30, 30);
     square(width - 130+30, yVal+30, 30);
   } else if (tetroS == true) {
-    fill(red);
+    fill(red); 
     square(width - 130+40, yVal, 30);
     square(width - 130+70, yVal, 30);
-    square(width - 130, yVal+30, 30);
     square(width - 130+40, yVal+30, 30);
+    square(width - 130+10, yVal+30, 30);
   } else if (tetroT == true) {
-    fill(purple);
+    fill(purple); 
     square(width - 130, yVal, 30);
     square(width - 130+30, yVal, 30);
     square(width - 130+60, yVal, 30);
     square(width - 130+30, yVal+30, 30);
   } else if (tetroZ == true) {
-    fill(green);
+    System.out.println("tetroZ should print");
+    fill(green); //doesn't always work
     square(width - 130, yVal, 30);
     square(width - 130-30, yVal, 30);
     square(width - 130, yVal+30, 30);
@@ -201,7 +202,6 @@ void draw() {
     // restarts, makes new tetromino
     
     //Makes it so that we know the next block picked ahead of time
-    //Currently doesn't work though...
     randomNum = next;
     next = (int)(Math.random()*7)+1;
     if (next == 1) {
@@ -213,6 +213,7 @@ void draw() {
     } else if (next == 4) {
       tetroO = true;
     } else if (next == 5) {
+      System.out.println("Should draw tetroS");
       tetroS = true;
     } else if (next == 6) {
       tetroT = true;
@@ -355,8 +356,8 @@ void tetrominoI() {
 
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
-    tetroI = false;
     updateGrid(currentTetromino);
+    tetroI = false;
   } else {
     fall = true;
   }
@@ -377,8 +378,8 @@ void tetrominoJ() {
   currentTetromino.add(four);
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
-    tetroJ = false;
     updateGrid(currentTetromino);
+    tetroJ = false;
   } else {
     fall = true;
   }
@@ -399,8 +400,8 @@ void tetrominoL() {
   currentTetromino.add(four);
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
-    tetroL = false;
     updateGrid(currentTetromino);
+    tetroL = false;
   } else {
     fall = true;
   }
@@ -443,8 +444,8 @@ void tetrominoS(){
   currentTetromino.add(four);
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
-    tetroS = false;
     updateGrid(currentTetromino);
+    tetroS = false;
   } else {
     fall = true;
   }
@@ -465,8 +466,8 @@ void tetrominoT(){
   currentTetromino.add(four);
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
-    tetroT = false;
     updateGrid(currentTetromino);
+    tetroT = false;
   } else {
     fall = true;
   }
@@ -486,8 +487,8 @@ void tetrominoZ(){
   currentTetromino.add(four);
   if (checkTopBottom(four) || checkTopBottom(three) || checkTopBottom(two) || checkTopBottom(one)) {
     fall = false;
-    tetroZ = false;
     updateGrid(currentTetromino);
+    tetroZ = false;
   } else {
     fall = true;
   }
