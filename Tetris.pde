@@ -42,13 +42,11 @@ void setup(){
   for (int x = 0; x < gridW; x++) {
     for (int y = 0; y < gridH; y++) {
       grid[x][y] = new TetrisBlock(x * 25, y * 25, black);
-      grid[x][y].draw();
     }
   }
 }
 
 void draw() {
-  background(225);
   frameRate(currentSpeed);
 
   int yVal = 180;
@@ -139,7 +137,7 @@ void draw() {
         newTetromino = false;
         startY = 0;
       } 
-      else { // fall = true  
+      else {
         for (TetrisBlock block : currentTetromino) {
           block.setColor(black);
         }
@@ -301,7 +299,6 @@ boolean checkLeft(TetrisBlock block) { //checks to see if the block can move to 
     return true; //if gridX is less than 0 or negative, it is out of the grid so it cannot move anymore to the left 
   }
   if (grid[gridX][gridY].getColor() != black && !currentTetromino.contains(grid[gridX][gridY])) {
-  // if you're reading this, try bringing a block off to the side, instead of it continuing to fall it gives an error
     return true;
   }
   return false;
