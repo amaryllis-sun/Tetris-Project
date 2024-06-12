@@ -133,8 +133,6 @@ void draw() {
   }
  
   if (newTetromino) {
-    System.out.println("RandomNum: " + randomNum);
-    System.out.println("Next: " + next);
     currentTetromino = new ArrayList<TetrisBlock>();
     if (randomNum == 1) {
       if (fall == false) {
@@ -333,7 +331,6 @@ void keyPressed() {
       }
     }
     if (canMoveLeft) {
-      frameRate(10);
       for(TetrisBlock block : currentTetromino){
         block.setX(block.getX() - 25);
       }
@@ -347,7 +344,6 @@ void keyPressed() {
       }
     }
     if (canMoveRight) {
-      frameRate(10);
       for(TetrisBlock block : currentTetromino){
         block.setX(block.getX() + 25);
       }
@@ -542,7 +538,7 @@ void clearRow(){
    }
     score += 100; 
       if(score >= 300){
-        level += score/300; //if the score is above 500, the level would increase by how much 500s is in the score 
+        level += score/300; //if the score is above 300, the level would increase by how much 300s is in the score 
    }
    }
       y++;
